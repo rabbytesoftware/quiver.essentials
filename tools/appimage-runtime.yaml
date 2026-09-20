@@ -17,7 +17,7 @@ metadata:
 # ─── No variables, no netbridge — this Arrow only installs a helper script ───
 
 targets:
-  "*":
+  "linux/*":
     lifecycle:
       install:
         - type: run

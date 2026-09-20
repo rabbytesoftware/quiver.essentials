@@ -12,7 +12,7 @@ metadata:
     - image-viewer
 
 targets:
-  "*":
+  "linux/amd64":
     tools:
       - github.com/rabbytesoftware/quiver.essentials/appimage-runtime
 
