@@ -11,11 +11,11 @@ metadata:
     - linux
     - image-viewer
 
-tools:
-  - github.com/rabbytesoftware/quiver.essentials/appimage-runtime
-
 targets:
   "linux/amd64":
+    tools:
+      - github.com/rabbytesoftware/quiver.essentials/appimage-runtime
+
     lifecycle:
       install:
         - type: fetch
