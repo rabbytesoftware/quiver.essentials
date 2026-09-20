@@ -1,0 +1,66 @@
+schema: "arrow@v0"
+
+metadata:
+  name: rabbytesoftware.appimage-runtime
+  description: Extracts AppImages into a runnable directory without FUSE or root
+  license: MIT
+  quiver: github.com/rabbytesoftware/quiver.essentials
+  url: https://github.com/rabbytesoftware/quiver.essentials
+  maintainers:
+    - name: Rabbyte Software
+      url: https://github.com/rabbytesoftware
+  tags:
+    - appimage
+    - linux
+    - tooling
+
+# ─── No variables, no netbridge — this Arrow only installs a helper script ───
+
+targets:
+  "linux/*":
+    lifecycle:
+      install:
+        - type: run
+          command: |
+            cat > ./appimage-extract.sh <<'SCRIPT'
+            #!/usr/bin/env sh
+            set -eu
+
+            APPIMAGE=$1
+
+            if [ -z "$APPIMAGE" ]; then
+              echo "usage: appimage-extract.sh <path-to-AppImage>" >&2
+              exit 1
+            fi
+
+            if [ ! -f "$APPIMAGE" ]; then
+              echo "appimage-extract: no such file: $APPIMAGE" >&2
+              exit 1
+            fi
+
+            DIR=$(dirname "$APPIMAGE")
+            BASENAME=$(basename "$APPIMAGE")
+
+            chmod +x "$DIR/$BASENAME"
+
+            if [ -d "$DIR/squashfs-root" ]; then
+              echo "appimage-extract: squashfs-root already exists in $DIR, skipping extraction" >&2
+            else
+              ( cd "$DIR" && "./$BASENAME" --appimage-extract >/dev/null )
+            fi
+
+            echo "$DIR/squashfs-root/AppRun"
+            SCRIPT
+            chmod +x ./appimage-extract.sh
+          title: Installing AppImage extraction helper
+          timeout: 30s
+
+      uninstall:
+        - type: run
+          command: rm -f ./appimage-extract.sh
+          title: Removing AppImage extraction helper
+          timeout: 10s
+          exit_on_failure: false
+
+    exports:
+      extract: ./appimage-extract.sh

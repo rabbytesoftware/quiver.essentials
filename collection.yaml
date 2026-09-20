@@ -1,0 +1,26 @@
+schema: "collection@v0"
+
+metadata:
+  name: "Quiver Essentials"
+  description: "Arrows essential to Quiver's own development and ecosystem tooling"
+  url: "https://github.com/rabbytesoftware/quiver.essentials"
+  maintainers:
+    - "rabbytesoftware"
+
+# `path:` is the arrow's file location within this repo, resolved verbatim
+# (e.g. `tools/appimage-runtime` -> ./tools/appimage-runtime.yaml). `auid:`
+# is the arrow's public identity; when given it decouples that identity from
+# the file's location, so this file can be moved or reorganized later
+# without changing github.com/rabbytesoftware/quiver.essentials/appimage-runtime
+# for anyone already depending on it. Requires quiver.core's auid/nested-path
+# support (feature/collection-arrow-auid) — the pre-existing flat-file
+# resolver cannot fetch a nested path.
+arrows:
+  - auid: appimage-runtime
+    path: tools/appimage-runtime
+
+  # Flat form (no explicit auid): identity derives from path's last segment,
+  # same as before this feature — kept simple since qview has no reason to
+  # live anywhere but this repo's root. Depends on appimage-runtime above and
+  # exercises it end to end.
+  - path: qview

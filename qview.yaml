@@ -1,0 +1,49 @@
+schema: "arrow@v0"
+
+metadata:
+  name: jurplel.qview
+  description: Practical and minimal image viewer, packaged as an AppImage — validates appimage-runtime end to end
+  license: GPL-3.0
+  quiver: github.com/rabbytesoftware/quiver.essentials
+  url: https://interversehq.com/qview/
+  tags:
+    - appimage
+    - linux
+    - image-viewer
+
+tools:
+  - github.com/rabbytesoftware/quiver.essentials/appimage-runtime
+
+targets:
+  "linux/amd64":
+    lifecycle:
+      install:
+        - type: fetch
+          url: https://github.com/jurplel/qView/releases/download/7.1/qView-7.1-x86_64.AppImage
+          to: ./qView.AppImage
+          title: Downloading qView
+          timeout: 5m
+
+        - type: run
+          command: ${github.com/rabbytesoftware/quiver.essentials/appimage-runtime.extract} ./qView.AppImage
+          title: Extracting qView AppImage
+          timeout: 1m
+
+      execute:
+        - type: run
+          command: ./squashfs-root/AppRun
+          title: Launching qView
+          timeout: 15s
+
+      stop:
+        - type: signal
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
+
+      uninstall:
+        - type: run
+          command: rm -rf ./squashfs-root ./qView.AppImage
+          title: Removing qView
+          timeout: 30s
+          exit_on_failure: false
