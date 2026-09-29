@@ -11,3 +11,11 @@ addressable directly without following the collection, e.g.
 See `collection.yaml` for the manifest and [docs/spec/manifests/v0/collection.md](
 https://github.com/rabbytesoftware/quiver.core/blob/develop/docs/spec/manifests/v0/collection.md)
 in `quiver.core` for the schema this repo follows.
+
+## Agent skills
+
+[`skills/`](skills/README.md) holds skills that teach AI agents to work with
+Quiver. [`quiver-arrow-authoring`](skills/quiver-arrow-authoring/SKILL.md) lets
+an agent (Claude Code, Codex, Gemini CLI, or any chat assistant via a bundled
+file) write, validate and test-install arrows and collections — including new
+arrows for this collection.

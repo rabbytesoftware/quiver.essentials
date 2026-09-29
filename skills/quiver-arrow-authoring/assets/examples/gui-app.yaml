@@ -1,0 +1,93 @@
+# Shape: a desktop GUI app shipped as a different package per OS.
+# Real upstream: https://github.com/jurplel/qView/releases/tag/7.1
+#
+# Why it looks like this:
+# - `portable` turns each package into a runnable app inside the workdir:
+#   the AppImage is unpacked in pure Go (no FUSE) with a relocatable launcher,
+#   the DMG's .app bundle is copied out, and the Windows zip is unpacked.
+#   Each writes into its own ${INSTALL_PATH}/qView, which `portable` then owns
+#   and replaces cleanly on the next install.
+# - `expose.desktop` with `path: auto` registers what `portable` produced: a
+#   .desktop file on Linux, the .app in Applications on macOS, a Start Menu
+#   shortcut on Windows.
+# - Linux is `linux/amd64` only: upstream publishes an x86_64 AppImage and
+#   nothing for arm64, so claiming `linux/*` would install a binary arm64
+#   machines cannot run natively. Widen it only on purpose (e.g. box64).
+# - macOS uses one universal DMG, so the darwin url/checksum are plain scalars.
+# - Install-only: every step writes inside ${INSTALL_PATH}.
+schema: "arrow@v0"
+
+metadata:
+  name: jurplel.qview
+  description: Practical and minimal image viewer
+  license: GPL-3.0
+  url: https://interversehq.com/qview/
+  credits:
+    - name: jurplel
+      url: https://github.com/jurplel
+  tags:
+    - image-viewer
+    - desktop
+
+targets:
+  linux/amd64:
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download qView
+          url: https://github.com/jurplel/qView/releases/download/7.1/qView-7.1-x86_64.AppImage
+          checksum: f02db7a00a689a9ded6bcbd9be5b9d3ea0379b7c5123f8bfaac4749025a6051a
+          to: ${INSTALL_PATH}/.qview.download
+          timeout: 10m
+        - type: portable
+          title: Install qView
+          from: ${INSTALL_PATH}/.qview.download
+          to: ${INSTALL_PATH}/qView
+          timeout: 10m
+    expose:
+      desktop:
+        - name: qView
+          path: auto
+          categories: [Graphics, Viewer]
+
+  "darwin/*":
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download qView
+          url: https://github.com/jurplel/qView/releases/download/7.1/qView-7.1.dmg
+          checksum: fa34d0e54601b8557f4e879527b9bb1e728ace5c7c1c69cf126700ca4d0b5817
+          to: ${INSTALL_PATH}/.qview.download
+          timeout: 10m
+        - type: portable
+          title: Install qView
+          from: ${INSTALL_PATH}/.qview.download
+          to: ${INSTALL_PATH}/qView
+          timeout: 10m
+    expose:
+      desktop:
+        - name: qView
+          path: auto
+
+  "windows/*":
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download qView
+          url:
+            windows/amd64: https://github.com/jurplel/qView/releases/download/7.1/qView-7.1-win64.zip
+            windows/arm64: https://github.com/jurplel/qView/releases/download/7.1/qView-7.1-winarm64.zip
+          checksum:
+            windows/amd64: dce9dc09be15c003d5bf4a73971b7e66790c66692db163813b9f266341bcaa25
+            windows/arm64: b7f83111daa3853464af7c4e945c7c4849e920607fda8c8460ecc2e6f29cd934
+          to: ${INSTALL_PATH}/.qview.download
+          timeout: 10m
+        - type: portable
+          title: Install qView
+          from: ${INSTALL_PATH}/.qview.download
+          to: ${INSTALL_PATH}/qView
+          timeout: 10m
+    expose:
+      desktop:
+        - name: qView
+          path: auto
