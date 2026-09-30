@@ -1,0 +1,30 @@
+# collection@v0 template. Lives at the root of the collection's repository as
+# `collection.yaml` (or inside a ```collection fence in COLLECTION.md).
+#
+# Each local entry's `path` names the arrow's file inside this repository,
+# without the .yaml/.md extension: `tools/mytool` -> ./tools/mytool.yaml.
+# Its public namespace is <this repo's namespace>/<auid>, where auid is the
+# explicit `auid:` or else the last segment of `path`.
+schema: "collection@v0"
+
+metadata:
+  name: "My Collection"
+  description: "One line saying what this collection groups"
+  url: "https://github.com/OWNER/REPO"
+  maintainers:
+    - "OWNER"
+  tags:
+    - "tooling"
+
+arrows:
+  # Local arrow, identity from the file name -> github.com/OWNER/REPO/mytool
+  - path: mytool
+
+  # Local arrow with a stable identity decoupled from where the file lives
+  # -> github.com/OWNER/REPO/other-tool, whatever `path` becomes later
+  - auid: other-tool
+    path: tools/other-tool
+
+  # External arrow (its own repository), object and string forms
+  - namespace: github.com/junegunn/fzf
+  - github.com/jqlang/jq

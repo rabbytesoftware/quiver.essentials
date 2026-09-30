@@ -1,0 +1,85 @@
+# Shape: a CLI tool published as one bare executable per platform (no archive).
+# Real upstream: https://github.com/jqlang/jq/releases/tag/jq-1.8.2
+#
+# Why it looks like this:
+# - `portable` installs a bare executable as <to>/<name> with mode 0755, so no
+#   `chmod` run step is needed. Its `name` is NOT Overrideable, and Windows
+#   needs `jq.exe`, so Windows gets its own target instead of a "*" target.
+# - `_unix` is an abstract base (key starts with `_`, never selected). Linux
+#   and macOS share it via `base:` and declare nothing else. The url/checksum
+#   maps inside it only need keys for the platforms its concrete children
+#   match: coverage is checked on concrete targets, after inheritance.
+# - The expose `path` is spelled out rather than `auto`, because the file name
+#   is known exactly.
+schema: "arrow@v0"
+
+metadata:
+  name: jqlang.jq
+  description: Command-line JSON processor
+  license: MIT
+  url: https://jqlang.org
+  credits:
+    - name: jq contributors
+      url: https://github.com/jqlang/jq
+  tags:
+    - cli
+    - json
+
+targets:
+  _unix:
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download jq
+          url:
+            linux/amd64: https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-linux-amd64
+            linux/arm64: https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-linux-arm64
+            darwin/amd64: https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-macos-amd64
+            darwin/arm64: https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-macos-arm64
+          checksum:
+            linux/amd64: b1c22172dd303f3be49e935aa56aa48a8b7a46e0bc838b4997d3bb451495870f
+            linux/arm64: 8b85c817833814ddca00a144c33705546355afccf0cf39b188f3cdb48b852309
+            darwin/amd64: e94b266e3c26690550006abe63152b782280f4e14374accdf04cbde844f00bc0
+            darwin/arm64: 2d75340ba57a4b4b4c8708a21c2dc8e958a48aaa8bba13b27f77f6e4c0eca07e
+          to: ${INSTALL_PATH}/.jq.download
+          timeout: 5m
+        - type: portable
+          title: Install jq
+          from: ${INSTALL_PATH}/.jq.download
+          to: ${INSTALL_PATH}/bin
+          name: jq
+          timeout: 2m
+    expose:
+      cli:
+        - name: jq
+          path: ${INSTALL_PATH}/bin/jq
+
+  "linux/*":
+    base: _unix
+
+  "darwin/*":
+    base: _unix
+
+  "windows/*":
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download jq
+          url:
+            windows/amd64: https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-windows-amd64.exe
+            windows/arm64: https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-windows-arm64.exe
+          checksum:
+            windows/amd64: a6fc67fedaf9128a3309a1e2ebb8b986aeccf70122ee46d2cb4849e423f0c627
+            windows/arm64: 083b5377392bc57cf27052b6d20a2d927770683bca844632901ff38b4b7b0ac7
+          to: ${INSTALL_PATH}/.jq.download
+          timeout: 5m
+        - type: portable
+          title: Install jq
+          from: ${INSTALL_PATH}/.jq.download
+          to: ${INSTALL_PATH}/bin
+          name: jq.exe
+          timeout: 2m
+    expose:
+      cli:
+        - name: jq
+          path: ${INSTALL_PATH}/bin/jq.exe

@@ -1,0 +1,110 @@
+# Shape: a long-running service with user settings and a custom method.
+# Real upstream: https://github.com/caddyserver/caddy/releases/tag/v2.11.4
+#
+# Why it looks like this:
+# - One "*" target: only the download (url + checksum) and the binary name
+#   differ per platform, so those fields are Overrideable instead of splitting
+#   the recipe into several targets. `command` uses `default` for Unix and a
+#   `"windows/*"` glob key for caddy.exe.
+# - `execute` has NO timeout: a run step's timeout kills the process when it
+#   expires, and a server must keep running until `stop`.
+# - `stop` is a `signal` step; it targets the PID `execute` recorded.
+# - The port is a `number` variable. It has no `netbridge` entry because this
+#   is a local file server (127.0.0.1 by default) that should not be forwarded
+#   through the router; a server other machines must reach (a game server)
+#   declares both, see references/variables-and-dependencies.md ("Ports").
+# - Install-only: every install step writes inside ${INSTALL_PATH}, and the
+#   server writes nothing outside it, so there is nothing for `uninstall` to do.
+schema: "arrow@v0"
+
+metadata:
+  name: caddyserver.caddy-file-server
+  description: Serve a directory over HTTP with Caddy's built-in file server
+  license: Apache-2.0
+  url: https://caddyserver.com
+  credits:
+    - name: Caddy contributors
+      url: https://github.com/caddyserver/caddy
+  tags:
+    - server
+    - http
+
+variables:
+  - name: ROOT
+    type: string
+    default: "."
+    description: Directory to serve (relative to the install directory, or absolute)
+  - name: BIND_ADDRESS
+    type: select
+    default: "127.0.0.1"
+    values: ["127.0.0.1", "0.0.0.0"]
+    description: Listen only on this machine, or on every network interface
+  - name: PORT
+    type: number
+    default: "8080"
+    min: 1024
+    max: 65535
+    description: TCP port to listen on
+
+targets:
+  "*":
+    requirements:
+      cpu_cores: 1
+      ram_gb: 1
+      disk_gb: 1
+
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download Caddy
+          url:
+            linux/amd64: https://github.com/caddyserver/caddy/releases/download/v2.11.4/caddy_2.11.4_linux_amd64.tar.gz
+            linux/arm64: https://github.com/caddyserver/caddy/releases/download/v2.11.4/caddy_2.11.4_linux_arm64.tar.gz
+            darwin/amd64: https://github.com/caddyserver/caddy/releases/download/v2.11.4/caddy_2.11.4_mac_amd64.tar.gz
+            darwin/arm64: https://github.com/caddyserver/caddy/releases/download/v2.11.4/caddy_2.11.4_mac_arm64.tar.gz
+            windows/amd64: https://github.com/caddyserver/caddy/releases/download/v2.11.4/caddy_2.11.4_windows_amd64.zip
+            windows/arm64: https://github.com/caddyserver/caddy/releases/download/v2.11.4/caddy_2.11.4_windows_arm64.zip
+          checksum:
+            linux/amd64: 527fbf917c39189a1e3b31d34fa955601680b2d5c8055d2a87b8b9588dec7bb9
+            linux/arm64: 52d42ae12b3462097e9868da6dfed3c9648ae12edd3b3638102312af84cb6904
+            darwin/amd64: 34bc9e5cceee8d67844ef51da624f5b79e8d070f27236e050c3f0066a2dba534
+            darwin/arm64: 9efb0af2d6cf09cfb5053c0e51721b9b3d4956d346234f39368d943d25a3c9a7
+            windows/amd64: 1708333f79e274c7697285afe6d592ab39314e0b131e9ec6bea08ad27df62ebf
+            windows/arm64: c7f16da93728f61455f77c04eac1ff4de06a38da281ed6d3dcbfae795be2a936
+          to: ${INSTALL_PATH}/.caddy.download
+          timeout: 10m
+        - type: extract
+          title: Unpack Caddy
+          from: ${INSTALL_PATH}/.caddy.download
+          to: ${INSTALL_PATH}/bin
+          timeout: 5m
+
+      execute:
+        - type: run
+          title: Start the file server
+          command:
+            default: ./bin/caddy file-server --browse --root "${ROOT}" --listen ${BIND_ADDRESS}:${PORT}
+            "windows/*": '.\bin\caddy.exe file-server --browse --root "${ROOT}" --listen ${BIND_ADDRESS}:${PORT}'
+
+      stop:
+        - type: signal
+          title: Stop the file server
+          signal: graceful
+          timeout: 15s
+          exit_on_failure: false
+
+    methods:
+      version:
+        available_in: [ready]
+        steps:
+          - type: run
+            title: Print the Caddy version
+            command:
+              default: ./bin/caddy version
+              "windows/*": '.\bin\caddy.exe version'
+            timeout: 30s
+
+    expose:
+      cli:
+        - name: caddy
+          path: auto
