@@ -44,6 +44,8 @@ Establish, from the software's real release page or repository:
 - **What is inside** an archive when it matters (the executable's name and
   sub-path), how the program is started, what settings the user may want to
   change, and whether it needs other software (dependencies).
+- **Its official icon and banner**, if any (SVG first): see
+  `references/media.md` §3.
 - **Where it will be published** (its own repo's `ARROW.md`, a collection,
   or local only): see `references/publishing-and-collections.md` §6.
 
@@ -74,7 +76,16 @@ steps and lifecycle -> `references/manifest-reference.md`; variables,
 ports, dependencies -> `references/variables-and-dependencies.md`; CLI and
 desktop registration -> `references/expose.md`.
 
-### 4. Validate, fix, repeat
+### 4. Icon and banner
+
+Fill `metadata.media` following `references/media.md`: link the project's
+official icon (square, SVG preferred) and banner (2:1), pinned to a tag, and
+check them with `python3 "$SKILL_DIR/scripts/quiver_arrow.py" media URL`. If
+there is an official icon but no usable banner, generate one with the
+`banner` command and host it under `media/<auid>/` of the collection
+(`quiver.essentials` for its own arrows). Never create or alter an icon.
+
+### 5. Validate, fix, repeat
 
 ```sh
 python3 "$SKILL_DIR/scripts/quiver_arrow.py" validate path/to/manifest.yaml
@@ -90,7 +101,7 @@ platforms are exactly the ones upstream ships. Error codes and fixes:
 code 2), use the checklist in §6 of that file and say the result is
 unvalidated.
 
-### 5. Test-install when possible
+### 6. Test-install when possible
 
 If this machine runs one of the arrow's platforms and a `quiver` binary is
 available, install it for real in the isolated sandbox
@@ -100,12 +111,12 @@ available, install it for real in the isolated sandbox
 `desktop` entries or dependencies: desktop entries are written to the real
 system, and the script refuses them until the user agrees.
 
-### 6. Deliver
+### 7. Deliver
 
 Give the user:
 
 1. The manifest file(s), placed where they will be published (and the
-   collection entry when relevant).
+   collection entry and any generated `media/<auid>/` files when relevant).
 2. How it was checked: validator result and supported platforms, sandbox
    result, or "not validated" with the reason.
 3. What you assumed or could not verify (an archive's inner layout, an
@@ -180,6 +191,10 @@ validator rejects most often.
     `bad substitution`.
 15. **Do not write `metadata.generator`** (reserved for Quiver's own
     synthesized manifests) nor `type: dependencies` steps.
+16. **Media are official or derived from official**: icon square, banner
+    exactly 2:1, SVG preferred, raster only in high resolution (icon >= 512px,
+    banner >= 1200x600). A generated banner embeds the unmodified official
+    icon; no icon at all beats an invented one.
 
 ## Conventions seen in real arrows
 
@@ -203,7 +218,8 @@ validator rejects most often.
 | `references/variables-and-dependencies.md` | Variables, built-ins, substitution, ports, `tools`/`services`, `exports` |
 | `references/expose.md` | CLI and desktop registration, `auto`, per-OS behaviour |
 | `references/publishing-and-collections.md` | Namespaces and refs, file locations, versioning, `collection@v0`, Fletcher |
+| `references/media.md` | Icon and banner requirements, finding official assets, generating banners, hosting |
 | `references/validation-and-testing.md` | Validator phases, error codes, script usage, sandbox, runtime gotchas, offline checklist |
 | `assets/examples/*.yaml` | Validated and (except the GUI app) sandbox-installed examples of each shape |
 | `assets/templates/` | Starting points for `ARROW.md` and `collection.yaml` |
-| `scripts/quiver_arrow.py` | `validate`, `assets`, `checksum`, `sandbox`, `bundle` (Python 3.9+, stdlib only) |
+| `scripts/quiver_arrow.py` | `validate`, `assets`, `checksum`, `media`, `banner`, `sandbox`, `bundle` (Python 3.9+, stdlib only) |

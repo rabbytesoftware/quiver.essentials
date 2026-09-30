@@ -25,6 +25,10 @@ metadata:
   credits:
     - name: jurplel
       url: https://github.com/jurplel
+  media:
+    # The project's own scalable icon, pinned to the release tag. qView has no
+    # 2:1 banner; one would be generated from this icon (references/media.md).
+    icon: https://raw.githubusercontent.com/jurplel/qView/7.1/dist/linux/hicolor/scalable/apps/com.interversehq.qView.svg
   tags:
     - image-viewer
     - desktop

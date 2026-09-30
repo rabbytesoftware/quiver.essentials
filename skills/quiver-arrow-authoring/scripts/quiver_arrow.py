@@ -8,6 +8,8 @@ local Unix socket, or over HTTP when QUIVER_API is set.
     python3 quiver_arrow.py validate --collection collection.yaml
     python3 quiver_arrow.py assets owner/repo [TAG]
     python3 quiver_arrow.py checksum URL
+    python3 quiver_arrow.py media URL_OR_FILE [...]
+    python3 quiver_arrow.py banner --icon URL_OR_FILE --name NAME --background '#RRGGBB' --out media/<auid>/banner.svg
     python3 quiver_arrow.py bundle > quiver-arrow-authoring.md
     python3 quiver_arrow.py sandbox up
     python3 quiver_arrow.py sandbox seed github.com/owner/repo@v1.2.3 arrow.yaml
@@ -34,13 +36,17 @@ Where it connects:
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
+import html
 import http.client
 import json
 import os
+import re
 import shutil
 import signal
 import socket
+import struct
 import subprocess
 import sys
 import tempfile
@@ -198,6 +204,11 @@ class Args(argparse.Namespace):
         self.file: str = ""
         self.method: str = ""
         self.vars: list[str] = []
+        self.icon: str = ""
+        self.name: str = ""
+        self.background: str = ""
+        self.text_color: str = ""
+        self.out: str = ""
 
 
 def no_command(_args: Args) -> int:
@@ -327,6 +338,216 @@ def cmd_checksum(args: Args) -> int:
     except (urllib.error.URLError, OSError) as err:
         raise ToolError("download %s: %s" % (args.url, err)) from err
     print(digest.hexdigest())
+    return 0
+
+
+# --- media -------------------------------------------------------------------------------
+# Quiver Desktop draws `media.banner` in a 2:1 box (the details hero contains
+# it; search cards and collection heroes crop it with `cover`) and
+# `media.icon` in small square avatars. SVG is preferred for both: it stays
+# sharp at every size and any agent can write it. Raster images must be large
+# enough to stay crisp on high-density screens.
+
+MEDIA_MAX_BYTES = 10 * 1024 * 1024
+ICON_GOOD_PX = 512
+ICON_MIN_PX = 256
+ICON_SQUARE_TOLERANCE = 0.02
+BANNER_GOOD = (1200, 600)
+BANNER_MIN = (800, 400)
+BANNER_RATIO_TOLERANCE = 0.02
+BANNER_MIN_RATIO = 1.5
+BANNER_SIZE = (1200, 600)
+EMBED_MAX_BYTES = 1024 * 1024
+
+SVG_DIM = re.compile(r'\b(width|height)\s*=\s*"([0-9.]+)(?:px)?"')
+SVG_VIEWBOX = re.compile(r'viewBox\s*=\s*"\s*[-0-9.]+[\s,]+[-0-9.]+[\s,]+([0-9.]+)[\s,]+([0-9.]+)\s*"')
+
+
+class ImageInfo:
+    """Format and pixel size of an image; size 0x0 when it could not be read."""
+
+    def __init__(self, fmt: str, width: int = 0, height: int = 0) -> None:
+        self.fmt: str = fmt
+        self.width: int = width
+        self.height: int = height
+
+    @property
+    def known(self) -> bool:
+        return self.width > 0 and self.height > 0
+
+
+def read_media(source: str) -> bytes:
+    if source.startswith(("http://", "https://")):
+        req = urllib.request.Request(source, headers={"User-Agent": "quiver-arrow-authoring"})
+        try:
+            with cast(http.client.HTTPResponse, urllib.request.urlopen(req, timeout=60)) as resp:
+                data = resp.read(MEDIA_MAX_BYTES + 1)
+        except (urllib.error.URLError, OSError) as err:
+            raise ToolError("download %s: %s" % (source, err)) from err
+    else:
+        with open(source, "rb") as fh:
+            data = fh.read(MEDIA_MAX_BYTES + 1)
+    if len(data) > MEDIA_MAX_BYTES:
+        raise ToolError("%s is larger than %d MiB" % (source, MEDIA_MAX_BYTES // (1024 * 1024)))
+    return data
+
+
+def sniff_svg(data: bytes) -> ImageInfo:
+    text = data.decode("utf-8", "replace")
+    head = text[: text.find(">", text.find("<svg")) + 1] if "<svg" in text else text
+    dims = {m.group(1): float(m.group(2)) for m in SVG_DIM.finditer(head)}
+    if dims.get("width", 0) > 0 and dims.get("height", 0) > 0:
+        return ImageInfo("svg", int(dims["width"]), int(dims["height"]))
+    match = SVG_VIEWBOX.search(head)
+    if match:
+        return ImageInfo("svg", int(float(match.group(1))), int(float(match.group(2))))
+    return ImageInfo("svg")
+
+
+def sniff_jpeg(data: bytes) -> ImageInfo:
+    i = 2
+    while i + 9 < len(data):
+        if data[i] != 0xFF:
+            i += 1
+            continue
+        marker = data[i + 1]
+        if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+            height, width = struct.unpack(">HH", data[i + 5 : i + 9])
+            return ImageInfo("jpeg", width, height)
+        length = int.from_bytes(data[i + 2 : i + 4], "big")
+        i += 2 + length
+    return ImageInfo("jpeg")
+
+
+def sniff_webp(data: bytes) -> ImageInfo:
+    chunk = data[12:16]
+    if chunk == b"VP8X" and len(data) >= 30:
+        return ImageInfo("webp", 1 + int.from_bytes(data[24:27], "little"), 1 + int.from_bytes(data[27:30], "little"))
+    if chunk == b"VP8 " and len(data) >= 30:
+        width, height = struct.unpack("<HH", data[26:30])
+        return ImageInfo("webp", width & 0x3FFF, height & 0x3FFF)
+    if chunk == b"VP8L" and len(data) >= 25:
+        bits = int.from_bytes(data[21:25], "little")
+        return ImageInfo("webp", (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1)
+    return ImageInfo("webp")
+
+
+def sniff_image(data: bytes) -> ImageInfo:
+    if data.startswith(b"\x89PNG\r\n\x1a\n") and len(data) >= 24:
+        width, height = struct.unpack(">II", data[16:24])
+        return ImageInfo("png", width, height)
+    if data.startswith(b"\xff\xd8"):
+        return sniff_jpeg(data)
+    if data[:6] in (b"GIF87a", b"GIF89a") and len(data) >= 10:
+        width, height = struct.unpack("<HH", data[6:10])
+        return ImageInfo("gif", width, height)
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return sniff_webp(data)
+    if b"<svg" in data[:4096]:
+        return sniff_svg(data)
+    return ImageInfo("unknown")
+
+
+def icon_verdict(info: ImageInfo) -> tuple[str, str]:
+    if info.fmt == "unknown":
+        return "reject", "not an image format a webview displays"
+    if not info.known:
+        return "check", "size unknown: give the SVG a square viewBox or width/height"
+    if abs(info.width - info.height) > ICON_SQUARE_TOLERANCE * max(info.width, info.height):
+        return "reject", "not square (%dx%d); the avatar crops it" % (info.width, info.height)
+    if info.fmt == "svg":
+        return "good", "square SVG"
+    if min(info.width, info.height) >= ICON_GOOD_PX:
+        return "good", "square %s, %dpx" % (info.fmt, min(info.width, info.height))
+    if min(info.width, info.height) >= ICON_MIN_PX:
+        return "ok", "square %s, %dpx; look for an SVG or a %dpx+ version" % (info.fmt, info.width, ICON_GOOD_PX)
+    return "reject", "%dpx is too small (minimum %dpx; prefer SVG)" % (info.width, ICON_MIN_PX)
+
+
+def banner_verdict(info: ImageInfo) -> tuple[str, str]:
+    if info.fmt == "unknown":
+        return "reject", "not an image format a webview displays"
+    if not info.known:
+        return "check", "size unknown: give the SVG a 2:1 viewBox or width/height"
+    ratio = info.width / info.height
+    if ratio < BANNER_MIN_RATIO:
+        return "reject", "%.2f:1 is not banner-shaped (banners are 2:1); generate one with `banner`" % ratio
+    exact = abs(ratio - 2) <= 2 * BANNER_RATIO_TOLERANCE
+    shape = "2:1" if exact else "%.2f:1, will be cropped or letterboxed in the 2:1 frame" % ratio
+    if info.fmt == "svg":
+        return ("good" if exact else "ok"), "SVG, " + shape
+    if info.width >= BANNER_GOOD[0] and info.height >= BANNER_GOOD[1] // (1 if exact else 2):
+        return ("good" if exact else "ok"), "%s %dx%d, %s" % (info.fmt, info.width, info.height, shape)
+    if info.width >= BANNER_MIN[0] and info.height >= BANNER_MIN[1] // (1 if exact else 2):
+        return "ok", "%s %dx%d is small; prefer SVG or %dx%d+ (%s)" % (
+            info.fmt, info.width, info.height, BANNER_GOOD[0], BANNER_GOOD[1], shape)
+    return "reject", "%dx%d is too small (minimum %dx%d; prefer SVG)" % (info.width, info.height, BANNER_MIN[0], BANNER_MIN[1])
+
+
+def cmd_media(args: Args) -> int:
+    worst = 0
+    for source in args.files:
+        info = sniff_image(read_media(source))
+        size = "%dx%d" % (info.width, info.height) if info.known else "size unknown"
+        print("%s\n  format: %s, %s" % (source, info.fmt, size))
+        for role, verdict in (("icon", icon_verdict(info)), ("banner", banner_verdict(info))):
+            print("  as %-6s %-6s %s" % (role + ":", verdict[0], verdict[1]))
+        if icon_verdict(info)[0] == "reject" and banner_verdict(info)[0] == "reject":
+            worst = 1
+    return worst
+
+
+def contrast_color(background: str) -> str:
+    rgb = [int(background[i : i + 2], 16) / 255 for i in (1, 3, 5)]
+    lin = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    luminance = 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+    return "#111111" if luminance > 0.4 else "#FFFFFF"
+
+
+def cmd_banner(args: Args) -> int:
+    background = args.background.upper()
+    if not re.fullmatch(r"#[0-9A-F]{6}", background):
+        raise ToolError("--background must be a #RRGGBB colour, e.g. #1E3A8A")
+    data = read_media(args.icon)
+    info = sniff_image(data)
+    verdict, why = icon_verdict(info)
+    if verdict == "reject":
+        raise ToolError("icon %s cannot be used: %s" % (args.icon, why))
+    if len(data) > EMBED_MAX_BYTES:
+        raise ToolError("icon is %d KiB; embed a file under %d KiB (an SVG, or a smaller PNG)" % (len(data) // 1024, EMBED_MAX_BYTES // 1024))
+    mime = {"svg": "image/svg+xml", "png": "image/png", "jpeg": "image/jpeg", "gif": "image/gif", "webp": "image/webp"}[info.fmt]
+    uri = "data:%s;base64,%s" % (mime, base64.b64encode(data).decode("ascii"))
+    width, height = BANNER_SIZE
+    icon_px, gap, margin = 300, 72, 90
+    text_room = width - 2 * margin - icon_px - gap
+    name = args.name.strip()
+    font_px = max(40, min(112, int(text_room / max(1, len(name)) / 0.56)))
+    # Centre icon + name as one group; the text width is an estimate (no font
+    # metrics without a renderer), close enough for a bold sans-serif.
+    group = icon_px + gap + min(text_room, int(len(name) * font_px * 0.56))
+    icon_x = max(margin, (width - group) // 2)
+    text_x = icon_x + icon_px + gap
+    color = args.text_color.upper() or contrast_color(background)
+    svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d">\n'
+        '  <rect width="%d" height="%d" fill="%s"/>\n'
+        '  <image x="%d" y="%d" width="%d" height="%d" preserveAspectRatio="xMidYMid meet" href="%s"/>\n'
+        '  <text x="%d" y="%d" fill="%s" font-family="system-ui, -apple-system, \'Segoe UI\', Roboto, sans-serif" '
+        'font-size="%d" font-weight="700" dominant-baseline="middle">%s</text>\n'
+        "</svg>\n"
+    ) % (
+        width, height, width, height,
+        width, height, background,
+        icon_x, (height - icon_px) // 2, icon_px, icon_px, uri,
+        text_x, height // 2, color, font_px, html.escape(name),
+    )
+    out = os.path.abspath(args.out)
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w", encoding="utf-8") as fh:
+        _ = fh.write(svg)
+    print("wrote %s (%dx%d SVG, icon %s: %s)" % (out, width, height, verdict, why))
+    if len(name) * font_px * 0.56 > text_room:
+        print("warning: the name may not fit; shorten --name")
     return 0
 
 
@@ -795,6 +1016,18 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("checksum", help="download a URL and print its sha256")
     _ = p.add_argument("url")
     p.set_defaults(func=cmd_checksum)
+
+    p = sub.add_parser("media", help="check whether images (URLs or files) fit as icon / banner")
+    _ = p.add_argument("files", nargs="+", metavar="URL_OR_FILE")
+    p.set_defaults(func=cmd_media)
+
+    p = sub.add_parser("banner", help="generate a 2:1 SVG banner around an official icon")
+    _ = p.add_argument("--icon", required=True, help="official icon, URL or file (SVG preferred)")
+    _ = p.add_argument("--name", required=True, help="display name written on the banner")
+    _ = p.add_argument("--background", required=True, help="brand colour as #RRGGBB")
+    _ = p.add_argument("--text-color", default="", help="#RRGGBB; default: black or white for contrast")
+    _ = p.add_argument("--out", required=True, help="output path, e.g. media/<auid>/banner.svg")
+    p.set_defaults(func=cmd_banner)
 
     p = sub.add_parser("bundle", help="print the whole skill as one Markdown file, for chat assistants")
     p.set_defaults(func=cmd_bundle)

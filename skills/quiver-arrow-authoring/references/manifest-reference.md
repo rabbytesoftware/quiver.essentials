@@ -73,7 +73,7 @@ targets:
 | `quiver` | no | Namespace of the collection the arrow belongs to, when it ships in one. |
 | `maintainers` | no | List of `{name, email?, url?}` objects (never bare strings). Whoever maintains the *arrow*. |
 | `credits` | no | Same shape. Upstream authors of the software. |
-| `media` | no | `{icon, banner}` URLs. |
+| `media` | no | `{icon, banner}` URLs: a square icon and a 2:1 banner, SVG preferred. See `media.md`. |
 | `tags` | no | Free-form strings. |
 | `generator` | no | Written by Quiver's Fletcher on synthesized manifests. **Omit it in hand-written manifests**: its presence makes the arrow report `origin: inferred`. |
 
