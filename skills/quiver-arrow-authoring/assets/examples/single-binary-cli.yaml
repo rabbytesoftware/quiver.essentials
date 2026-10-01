@@ -14,7 +14,7 @@
 schema: "arrow@v0"
 
 metadata:
-  name: jqlang.jq
+  name: jq
   description: Command-line JSON processor
   license: MIT
   url: https://jqlang.org
@@ -27,6 +27,10 @@ metadata:
 
 targets:
   _unix:
+    requirements:
+      cpu_cores: 1
+      ram_gb: 1
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch
@@ -61,6 +65,10 @@ targets:
     base: _unix
 
   "windows/*":
+    requirements:
+      cpu_cores: 1
+      ram_gb: 1
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch

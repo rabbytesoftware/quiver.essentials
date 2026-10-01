@@ -103,7 +103,7 @@ python3 "$SKILL_DIR/scripts/quiver_arrow.py" banner \
   website or icon), otherwise a neutral dark (`#1F2937`) or light
   (`#F3F4F6`) tone that contrasts with the icon. Text colour defaults to
   black or white for contrast; override with `--text-color`.
-- `--name`: the software's display name, not the arrow's `owner.project`.
+- `--name`: the software's display name (the arrow's `metadata.name`).
   Long names shrink automatically; the command warns when one may not fit.
 - Re-run `media` on the result: it must report `banner: good`. If a real
   browser is available, look at it too (in a 2:1 box, with `contain` and

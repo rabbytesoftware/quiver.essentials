@@ -18,7 +18,7 @@
 schema: "arrow@v0"
 
 metadata:
-  name: caddyserver.caddy-file-server
+  name: Caddy File Server
   description: Serve a directory over HTTP with Caddy's built-in file server
   license: Apache-2.0
   url: https://caddyserver.com
