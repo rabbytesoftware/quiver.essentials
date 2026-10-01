@@ -1,0 +1,55 @@
+schema: "arrow@v0"
+
+metadata:
+  name: WhatsApp
+  description: Private messaging and calls, on your Mac
+  license: Proprietary
+  quiver: github.com/rabbytesoftware/quiver.essentials
+  url: https://www.whatsapp.com/download
+  maintainers:
+    - name: Rabbyte Software
+      url: https://github.com/rabbytesoftware
+  credits:
+    - name: WhatsApp LLC
+      url: https://www.whatsapp.com
+  media:
+    icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/whatsapp/icon.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/whatsapp/banner.svg
+  tags:
+    - chat
+    - messaging
+    - desktop
+
+# macOS only. WhatsApp publishes Windows exclusively through the Microsoft
+# Store and has no Linux client, so neither can be installed from a download
+# Quiver can verify.
+targets:
+  # One universal (x86_64 + arm64) DMG; requires macOS 12.1 or later.
+  # Requirements are conservative estimates: WhatsApp publishes no hardware
+  # minimums.
+  #
+  # The download is UNVERIFIED: WhatsApp serves the DMG only through this
+  # endpoint, which redirects to a signed, short-lived CDN URL for whatever the
+  # current version is, so no fixed URL or checksum exists. Each install gets
+  # the latest build, which then updates itself.
+  "darwin/*":
+    requirements:
+      cpu_cores: 2
+      ram_gb: 4
+      disk_gb: 1
+    lifecycle:
+      install:
+        - type: fetch
+          title: Download WhatsApp
+          url: https://web.whatsapp.com/desktop/mac_native/release/?configuration=Release
+          to: ${INSTALL_PATH}/.whatsapp.download
+          timeout: 15m
+        - type: portable
+          title: Install WhatsApp
+          from: ${INSTALL_PATH}/.whatsapp.download
+          to: ${INSTALL_PATH}/WhatsApp
+          timeout: 10m
+    expose:
+      desktop:
+        - name: WhatsApp
+          path: auto

@@ -18,7 +18,7 @@
 schema: "arrow@v0"
 
 metadata:
-  name: jurplel.qview
+  name: qView
   description: Practical and minimal image viewer
   license: GPL-3.0
   url: https://interversehq.com/qview/
@@ -35,6 +35,10 @@ metadata:
 
 targets:
   linux/amd64:
+    requirements:
+      cpu_cores: 2
+      ram_gb: 2
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch
@@ -55,6 +59,10 @@ targets:
           categories: [Graphics, Viewer]
 
   "darwin/*":
+    requirements:
+      cpu_cores: 2
+      ram_gb: 2
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch
@@ -74,6 +82,10 @@ targets:
           path: auto
 
   "windows/*":
+    requirements:
+      cpu_cores: 2
+      ram_gb: 2
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch

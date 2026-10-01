@@ -43,7 +43,7 @@ A target:
 targets:
   <key>:
     base: <another key>          # optional, single parent
-    requirements:                # optional, each integer >= 1
+    requirements:                # optional, each integer >= 1; declare them (the desktop shows 0 when absent)
       cpu_cores: 1
       ram_gb: 1                  # the key is ram_gb (not memory_gb)
       disk_gb: 1
@@ -66,7 +66,7 @@ targets:
 
 | Field | Required | Notes |
 |---|---|---|
-| `name` | yes | Non-empty, <= 255 chars. Convention in real arrows: `owner.project` (e.g. `junegunn.fzf`). |
+| `name` | yes | Non-empty, <= 255 chars. The **display name** shown as the arrow's title in Quiver Desktop: the product's own name (`Discord`, `fzf`), not an identifier. |
 | `description` | no | <= 1000 chars, one line. |
 | `license` | no | SPDX identifier. |
 | `url` | no | Homepage. |

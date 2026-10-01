@@ -13,7 +13,7 @@ read at is the arrow's version: tag releases, never write a `version:` field.
 schema: "arrow@v0"
 
 metadata:
-  name: owner.mytool
+  name: My Tool
   description: One-line description
   license: MIT
   url: https://github.com/OWNER/mytool
@@ -25,6 +25,10 @@ metadata:
 
 targets:
   "*":
+    requirements:
+      cpu_cores: 1
+      ram_gb: 1
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch

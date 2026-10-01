@@ -15,7 +15,7 @@
 schema: "arrow@v0"
 
 metadata:
-  name: junegunn.fzf
+  name: fzf
   description: A command-line fuzzy finder
   license: MIT
   url: https://github.com/junegunn/fzf

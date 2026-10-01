@@ -198,9 +198,13 @@ validator rejects most often.
 
 ## Conventions seen in real arrows
 
-- `metadata.name`: usually `owner.project` in lowercase (e.g. `junegunn.fzf`,
-  `rabbytesoftware.appimage-runtime`); follow the collection's own convention
-  when adding to one.
+- `metadata.name` is the **display name** Quiver Desktop shows as the
+  arrow's title: the product's own name and capitalisation (`Discord`,
+  `qView`, `fzf`), never an `owner.project` identifier.
+- Declare `requirements` (`cpu_cores`, `ram_gb`, `disk_gb`) on every
+  concrete target: without them the desktop shows "0 cores / 0 GB". Use the
+  upstream's published minimums; when there are none, conservative estimates,
+  said so in a comment.
 - `credits` for the upstream authors, `maintainers` for whoever maintains
   the arrow; both are lists of `{name, url?, email?}` objects.
 - Downloads go to a hidden file in the workdir
