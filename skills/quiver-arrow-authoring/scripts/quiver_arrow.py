@@ -9,6 +9,7 @@ local Unix socket, or over HTTP when QUIVER_API is set.
     python3 quiver_arrow.py assets owner/repo [TAG]
     python3 quiver_arrow.py checksum URL
     python3 quiver_arrow.py media URL_OR_FILE [...]
+    python3 quiver_arrow.py readme ARROW.md [--online]
     python3 quiver_arrow.py banner --icon URL_OR_FILE --name NAME --background '#RRGGBB' --out media/<auid>/banner.svg
     python3 quiver_arrow.py bundle > quiver-arrow-authoring.md
     python3 quiver_arrow.py sandbox up
@@ -209,6 +210,7 @@ class Args(argparse.Namespace):
         self.background: str = ""
         self.text_color: str = ""
         self.out: str = ""
+        self.online: bool = False
 
 
 def no_command(_args: Args) -> int:
@@ -548,6 +550,108 @@ def cmd_banner(args: Args) -> int:
     print("wrote %s (%dx%d SVG, icon %s: %s)" % (out, width, height, verdict, why))
     if len(name) * font_px * 0.56 > text_room:
         print("warning: the name may not fit; shorten --name")
+    return 0
+
+
+# --- readme -------------------------------------------------------------------------------
+# Quiver serves everything outside an arrow's first ```arrow fence as its readme,
+# and Quiver Desktop renders it in the Overview tab as sanitized GFM: images need
+# absolute https:// (or data:) URLs, and iframes and scripts are dropped.
+
+README_MIN_WORDS = 150
+MD_IMAGE = re.compile(r"!\[([^\]]*)\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
+HTML_SRC = re.compile(r"<(img|video|source|audio|track)\b[^>]*?\bsrc\s*=\s*[\"']([^\"']+)[\"']", re.IGNORECASE)
+FORBIDDEN_TAGS = re.compile(r"<\s*(iframe|script|style|object|embed)\b", re.IGNORECASE)
+
+
+def split_markdown_arrow(text: str) -> tuple[str, str]:
+    """Return (readme, manifest) the way Quiver splits ARROW.md / <path>.md."""
+    lines = text.replace("\r", "").split("\n")
+    start = next((i for i, line in enumerate(lines) if line == "```arrow"), -1)
+    if start < 0:
+        raise ToolError("no ```arrow fence: Quiver reads this file as plain YAML, with no readme")
+    end = next((i for i in range(start + 1, len(lines)) if lines[i] == "```"), -1)
+    if end < 0:
+        raise ToolError("the ```arrow fence is never closed")
+    readme = "\n".join(lines[:start] + lines[end + 1 :]).strip()
+    return readme, "\n".join(lines[start + 1 : end])
+
+
+def readme_images(readme: str) -> list[tuple[str, str, bool]]:
+    """(alt, url, is_markdown) for every embedded image or media source."""
+    found = [(m.group(1), m.group(2), True) for m in MD_IMAGE.finditer(readme)]
+    found.extend(("", m.group(2), False) for m in HTML_SRC.finditer(readme))
+    return found
+
+
+def readme_problems(readme: str, online: bool) -> tuple[list[str], list[str]]:
+    errors: list[str] = []
+    warnings: list[str] = []
+    if not readme:
+        errors.append("no prose outside the ```arrow fence: Overview would show only the Details card")
+        return errors, warnings
+    words = len(re.findall(r"[A-Za-z0-9']+", re.sub(r"\(https?://[^)]*\)", "", readme)))
+    if words < README_MIN_WORDS:
+        warnings.append("only %d words; aim for a short but complete page (references/readme.md §4)" % words)
+    if "```arrow" in readme.split("\n"):
+        warnings.append("a second ```arrow fence: Quiver ignores it and shows it as code in the readme")
+    if re.search(r"^# ", readme, re.MULTILINE):
+        warnings.append("a top-level '# ' title: the page hero already shows the name")
+    for match in FORBIDDEN_TAGS.finditer(readme):
+        errors.append("<%s> is removed by the desktop's sanitizer" % match.group(1).lower())
+    images = readme_images(readme)
+    if not images:
+        warnings.append("no images: add at least one screenshot of the software (references/readme.md §6)")
+    for alt, url, is_markdown in images:
+        if url.startswith("data:"):
+            continue
+        if not url.startswith("https://"):
+            errors.append("image %s: needs an absolute https:// URL (relative paths do not render)" % url)
+            continue
+        if is_markdown and not alt.strip():
+            warnings.append("image %s has no alt text" % url)
+        if online:
+            try:
+                info = sniff_image(read_media(url))
+            except ToolError as err:
+                errors.append("image %s does not load: %s" % (url, err))
+                continue
+            size = "%dx%d" % (info.width, info.height) if info.known else "size unknown"
+            if info.fmt == "unknown":
+                errors.append("image %s is not an image format a webview displays" % url)
+            else:
+                print("  ok  %s (%s, %s)" % (url, info.fmt, size))
+    return errors, warnings
+
+
+def cmd_readme(args: Args) -> int:
+    worst = 0
+    for path in args.files:
+        with open(path, encoding="utf-8") as fh:
+            readme, _ = split_markdown_arrow(fh.read())
+        print("%s: %d characters of readme" % (path, len(readme)))
+        errors, warnings = readme_problems(readme, args.online)
+        for message in errors:
+            print("  error:   %s" % message)
+        for message in warnings:
+            print("  warning: %s" % message)
+        if errors:
+            worst = 1
+        elif not warnings:
+            print("  readme looks good")
+    return worst
+
+
+def sandbox_readme(args: Args) -> int:
+    status, payload = sandbox_daemon().request("GET", "/v0/arrow/%s/readme" % encode_ns(args.namespace))
+    if status == 404:
+        print("%s has no readme (plain YAML, or no prose outside the ```arrow fence)" % args.namespace)
+        return 1
+    if status != 200:
+        raise ToolError("GET readme %s -> HTTP %d: %s" % (args.namespace, status, error_text(payload)))
+    readme = as_str(as_object(payload.get("data")).get("readme"))
+    print("%s serves %d characters of readme:\n" % (args.namespace, len(readme)))
+    print(readme[:600] + ("\n[...]" if len(readme) > 600 else ""))
     return 0
 
 
@@ -991,6 +1095,10 @@ def add_sandbox_parsers(sandbox: argparse.ArgumentParser) -> None:
     _ = p.add_argument("namespace")
     p.set_defaults(func=sandbox_status)
 
+    p = sb.add_parser("readme", help="print the readme the daemon serves for an arrow")
+    _ = p.add_argument("namespace")
+    p.set_defaults(func=sandbox_readme)
+
     p = sb.add_parser("remove", help="uninstall, remove from the catalog and delete the workdir")
     _ = p.add_argument("namespace")
     p.set_defaults(func=sandbox_remove)
@@ -1028,6 +1136,11 @@ def build_parser() -> argparse.ArgumentParser:
     _ = p.add_argument("--text-color", default="", help="#RRGGBB; default: black or white for contrast")
     _ = p.add_argument("--out", required=True, help="output path, e.g. media/<auid>/banner.svg")
     p.set_defaults(func=cmd_banner)
+
+    p = sub.add_parser("readme", help="check the readme an ARROW.md / <path>.md would serve")
+    _ = p.add_argument("files", nargs="+")
+    _ = p.add_argument("--online", action="store_true", help="also fetch every image and check it loads")
+    p.set_defaults(func=cmd_readme)
 
     p = sub.add_parser("bundle", help="print the whole skill as one Markdown file, for chat assistants")
     p.set_defaults(func=cmd_bundle)

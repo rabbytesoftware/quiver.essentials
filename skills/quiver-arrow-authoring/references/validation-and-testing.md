@@ -194,6 +194,9 @@ When nothing can run the validator (a chat assistant without tools, no
       `${#VAR}` (those are checked as Quiver names).
 - [ ] An MSI download's `to` ends in `.msi`.
 - [ ] Methods use `available_in: [ready]` on services.
+- [ ] Delivered as `ARROW.md` / `<path>.md` with a readme: prose before the
+      ```arrow fence, at least one screenshot with an absolute https URL, no
+      `<iframe>`/`<script>`, platform notes matching the manifest.
 - [ ] `stop` only with `execute`; services use a `signal` stop.
 - [ ] Every `${NAME}` is a built-in, a declared variable, or intentional shell
       syntax; variable defaults are quoted strings; select defaults are in
