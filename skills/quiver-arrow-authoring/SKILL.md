@@ -46,6 +46,10 @@ Establish, from the software's real release page or repository:
   change, and whether it needs other software (dependencies).
 - **Its official icon and banner**, if any (SVG first): see
   `references/media.md` §3.
+- **Material for its readme**: what it does, its main features, current
+  screenshots and published requirements, from the project's own pages and
+  official store listings (`references/readme.md` §5). Check that every
+  listing is published by the real vendor.
 - **Where it will be published** (its own repo's `ARROW.md`, a collection,
   or local only): see `references/publishing-and-collections.md` §6.
 
@@ -62,7 +66,12 @@ than inventing URLs, tags or checksums.
 | AppImage / DMG / zip GUI app | `assets/examples/gui-app.yaml` | `fetch` + `portable` + `expose.desktop` (`auto`) |
 | a server / daemon | `assets/examples/service.yaml` | install + `execute` (no timeout) + `stop` (`signal`) + variables |
 | an arrow in its own repository | `assets/templates/ARROW.md` | markdown form, readme prose around the ```arrow fence |
+| an arrow inside a collection | `assets/templates/collection-arrow.md` | `<path>.md`: readme prose + the ```arrow fence |
 | several arrows in one repository | `assets/templates/collection.yaml` | `collection@v0` + one file per arrow |
+
+Whatever the shape, deliver the arrow in the **markdown form** (`ARROW.md` or
+`<path>.md`) so it has a readme: the YAML from the examples goes inside its
+```arrow fence. Plain `.yaml` is only for arrows nobody will browse.
 
 Use the lowest complexity that fits: one `"*"` target with Overrideable
 `url`/`checksum` maps when only the download differs per platform; separate
@@ -85,7 +94,18 @@ there is an official icon but no usable banner, generate one with the
 `banner` command and host it under `media/<auid>/` of the collection
 (`quiver.essentials` for its own arrows). Never create or alter an icon.
 
-### 5. Validate, fix, repeat
+### 5. Readme
+
+Write the Overview page the user reads before installing, following
+`references/readme.md`: an opening paragraph, a screenshot of the software,
+features, more screenshots that show something new, an "Installing with
+Quiver" table per platform (including unsupported ones and why), "Good to
+know" notes that match the manifest, and license/trademark attribution.
+Original, factual prose from the sources gathered in step 1; screenshots
+hosted under `media/<auid>/screenshots/` when they have no stable URL. Check
+it with `python3 "$SKILL_DIR/scripts/quiver_arrow.py" readme <file>`.
+
+### 6. Validate, fix, repeat
 
 ```sh
 python3 "$SKILL_DIR/scripts/quiver_arrow.py" validate path/to/manifest.yaml
@@ -101,22 +121,24 @@ platforms are exactly the ones upstream ships. Error codes and fixes:
 code 2), use the checklist in §6 of that file and say the result is
 unvalidated.
 
-### 6. Test-install when possible
+### 7. Test-install when possible
 
 If this machine runs one of the arrow's platforms and a `quiver` binary is
 available, install it for real in the isolated sandbox
 (`references/validation-and-testing.md` §4): `sandbox up`, `seed`,
 `install`, run the exposed command or start the service and probe it,
-`sandbox remove`, `sandbox down`. Ask before testing manifests with
+`sandbox readme` to see the readme the daemon serves, `sandbox remove`,
+`sandbox down`. Ask before testing manifests with
 `desktop` entries or dependencies: desktop entries are written to the real
 system, and the script refuses them until the user agrees.
 
-### 7. Deliver
+### 8. Deliver
 
 Give the user:
 
-1. The manifest file(s), placed where they will be published (and the
-   collection entry and any generated `media/<auid>/` files when relevant).
+1. The arrow file(s) in markdown form, placed where they will be published
+   (and the collection entry and any `media/<auid>/` icons, banners and
+   screenshots when relevant).
 2. How it was checked: validator result and supported platforms, sandbox
    result, or "not validated" with the reason.
 3. What you assumed or could not verify (an archive's inner layout, an
@@ -195,12 +217,18 @@ validator rejects most often.
     exactly 2:1, SVG preferred, raster only in high resolution (icon >= 512px,
     banner >= 1200x600). A generated banner embeds the unmodified official
     icon; no icon at all beats an invented one.
+17. **Every arrow people will browse has a readme**: markdown form, prose
+    first and the ```arrow fence last, at least one screenshot of the software
+    with an absolute https URL, platform notes that match the manifest, and
+    sources credited. Never invent features, requirements or screenshots, and
+    never paste vendor marketing copy wholesale.
 
 ## Conventions seen in real arrows
 
 - `metadata.name` is the **display name** Quiver Desktop shows as the
   arrow's title: the product's own name and capitalisation (`Discord`,
-  `qView`, `fzf`), never an `owner.project` identifier.
+  `qView`, `fzf`), never an `owner.project` identifier. Spaces are fine
+  there, but not in `expose` entry names (`My App` -> `MyApp`).
 - Declare `requirements` (`cpu_cores`, `ram_gb`, `disk_gb`) on every
   concrete target: without them the desktop shows "0 cores / 0 GB". Use the
   upstream's published minimums; when there are none, conservative estimates,
@@ -223,7 +251,8 @@ validator rejects most often.
 | `references/expose.md` | CLI and desktop registration, `auto`, per-OS behaviour |
 | `references/publishing-and-collections.md` | Namespaces and refs, file locations, versioning, `collection@v0`, Fletcher |
 | `references/media.md` | Icon and banner requirements, finding official assets, generating banners, hosting |
+| `references/readme.md` | The Overview page: markdown form, what the desktop renders, structure, sources, screenshots |
 | `references/validation-and-testing.md` | Validator phases, error codes, script usage, sandbox, runtime gotchas, offline checklist |
 | `assets/examples/*.yaml` | Validated and (except the GUI app) sandbox-installed examples of each shape |
-| `assets/templates/` | Starting points for `ARROW.md` and `collection.yaml` |
-| `scripts/quiver_arrow.py` | `validate`, `assets`, `checksum`, `media`, `banner`, `sandbox`, `bundle` (Python 3.9+, stdlib only) |
+| `assets/templates/` | Starting points for `ARROW.md`, a collection arrow (`collection-arrow.md`) and `collection.yaml` |
+| `scripts/quiver_arrow.py` | `validate`, `assets`, `checksum`, `media`, `banner`, `readme`, `sandbox`, `bundle` (Python 3.9+, stdlib only) |

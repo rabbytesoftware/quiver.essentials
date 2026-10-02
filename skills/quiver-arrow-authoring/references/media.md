@@ -122,6 +122,7 @@ Do not generate icons.
 | Generated banner (or an official asset with no stable URL) for an arrow in **quiver.essentials** | `media/<auid>/banner.svg` (or `icon.svg`, `icon.png`) in this repository | `https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/<auid>/banner.svg` |
 | Generated banner for an arrow in another collection | the same `media/<auid>/` layout in that collection's repository | that repository's raw URL |
 | Generated banner for an arrow in its own repository | a stable path in that repository (e.g. `docs/banner.svg`) | raw URL on its default branch or a tag |
+| Readme screenshots with no stable official URL (store listings, press pages) | `media/<auid>/screenshots/<what-it-shows>.jpg` | the same raw URL pattern; see `readme.md` §6 |
 
 `<auid>` is the arrow's public identity in the collection (its `auid`, or
 the last segment of its `path`). Commit the media file in the same change as

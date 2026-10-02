@@ -1,9 +1,45 @@
-# My Tool
+One to four sentences on what My Tool is, who it is for and what sets it apart. This paragraph opens the Overview page in Quiver Desktop, right under the hero that already shows the name, icon, banner and description, so there is no title here.
 
-One or two paragraphs for humans: what the software is and what installing it
-through Quiver gives you. Everything outside the fenced block below is served
-as the arrow's readme (`GET /v0/arrow/{ns}/readme`) and shown on its details
-page. Only the FIRST block fenced as ```arrow is the manifest.
+![My Tool in a terminal](https://raw.githubusercontent.com/OWNER/mytool/main/docs/screenshot.png)
+
+## Features
+
+- **First feature**: one line on what it does for the user.
+- **Second feature**: one line.
+
+## Usage
+
+```sh
+mytool --help
+```
+
+## Installing with Quiver
+
+| Platform | What Quiver installs |
+|---|---|
+| Linux, macOS, Windows (x86_64 and ARM64) | The release archive for your platform; `mytool` is added to your PATH (run `quiver path setup` once). |
+
+## License
+
+My Tool is released under the [MIT License](https://github.com/OWNER/mytool/blob/main/LICENSE).
+
+<!--
+Template notes (delete this comment):
+- Put this file at the root of the repository the arrow installs from, as
+  ARROW.md. Everything outside the ```arrow fence below is the readme shown
+  on the arrow's Overview page; the fence holds the manifest. See
+  references/readme.md.
+- The git ref Quiver reads this file at is the arrow's version: tag
+  releases, never write a `version:` field.
+- ${REF} in the URLs is that ref. It only works when the arrow ships in the
+  same repository as the releases it downloads, with tags named like the
+  release.
+- Add the per-platform `checksum` map (see assets/examples/archive-cli.yaml):
+  with ${REF} URLs the digests change every release, so update them in the
+  commit that gets tagged (ideally from the release pipeline).
+-->
+
+```arrow is the manifest.
 
 Put this file at the root of the repository the arrow is installed from, as
 `ARROW.md` (or put the bare YAML in `arrow.yaml`). The git ref the manifest is
@@ -52,14 +88,3 @@ targets:
         - name: mytool
           path: auto
 ```
-
-Notes for the author (delete this section):
-
-- `${REF}` in the URL is the git ref Quiver read this file at. It only works
-  when the arrow ships in the same repository as the releases it downloads,
-  and when release tags are named exactly like the ref.
-- Add the per-platform `checksum` map (see assets/examples/archive-cli.yaml).
-  With `${REF}` URLs the digests change every release, so they must be
-  updated in the same commit that gets tagged (ideally by the release
-  pipeline); this template leaves them out only because it has no real
-  release to take them from.
