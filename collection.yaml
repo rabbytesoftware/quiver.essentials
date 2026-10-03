@@ -31,3 +31,42 @@ arrows:
 
   - auid: whatsapp
     path: apps/whatsapp
+
+  - auid: figma
+    path: apps/figma
+
+  - auid: brave
+    path: apps/brave
+
+  - auid: raycast
+    path: apps/raycast
+
+  - auid: warp
+    path: apps/warp
+
+  - auid: git
+    path: apps/git
+
+  - auid: go
+    path: apps/go
+
+  - auid: rust
+    path: apps/rust
+
+  - auid: nodejs
+    path: apps/nodejs
+
+  - auid: onlyoffice
+    path: apps/onlyoffice
+
+  - auid: krita
+    path: apps/krita
+
+  - auid: gimp
+    path: apps/gimp
+
+  - auid: docker-desktop
+    path: apps/docker-desktop
+
+  - auid: docker-cli
+    path: apps/docker-cli
