@@ -65,8 +65,5 @@ arrows:
   - auid: gimp
     path: apps/gimp
 
-  - auid: docker-desktop
-    path: apps/docker-desktop
-
-  - auid: docker-cli
-    path: apps/docker-cli
+  - auid: docker
+    path: apps/docker
