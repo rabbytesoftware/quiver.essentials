@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1081" height="372" viewBox="0 0 1081 372">
+<rect width="1081" height="372" rx="10" fill="#1E1E1E"/>
+<rect width="1081" height="34" rx="10" fill="#2D2D2D"/><rect y="24" width="1081" height="10" fill="#2D2D2D"/>
+<circle cx="20" cy="17" r="6" fill="#FF5F57"/><circle cx="40" cy="17" r="6" fill="#FEBC2E"/><circle cx="60" cy="17" r="6" fill="#28C840"/>
+<text x="540.5" y="22" fill="#9A9A9A" font-family="-apple-system, Segoe UI, sans-serif" font-size="13" text-anchor="middle">Terminal</text>
+<g font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="15" xml:space="preserve">
+<text x="24" y="64"><tspan fill="#5FD068" font-weight="bold">$</tspan><tspan fill="#FFFFFF" font-weight="bold"> rustc&#160;--version</tspan></text>
+<text x="24" y="86" fill="#D4D4D4">rustc&#160;1.99.0&#160;(b940084d7&#160;2026-09-28)</text>
+<text x="24" y="108"><tspan fill="#5FD068" font-weight="bold">$</tspan><tspan fill="#FFFFFF" font-weight="bold"> cargo&#160;new&#160;hello</tspan></text>
+<text x="24" y="130" fill="#D4D4D4">&#160;&#160;&#160;&#160;Creating&#160;binary&#160;(application)&#160;`hello`&#160;package</text>
+<text x="24" y="152" fill="#D4D4D4">note:&#160;see&#160;more&#160;`Cargo.toml`&#160;keys&#160;and&#160;their&#160;definitions&#160;at&#160;https://doc.rust-lang.org/cargo/reference/manifest.html</text>
+<text x="24" y="174"><tspan fill="#5FD068" font-weight="bold">$</tspan><tspan fill="#FFFFFF" font-weight="bold"> cat&#160;src/main.rs</tspan></text>
+<text x="24" y="196" fill="#D4D4D4">fn&#160;main()&#160;{</text>
+<text x="24" y="218" fill="#D4D4D4">&#160;&#160;&#160;&#160;println!(&quot;Hello,&#160;world!&quot;);</text>
+<text x="24" y="240" fill="#D4D4D4">}</text>
+<text x="24" y="262"><tspan fill="#5FD068" font-weight="bold">$</tspan><tspan fill="#FFFFFF" font-weight="bold"> cargo&#160;run</tspan></text>
+<text x="24" y="284" fill="#D4D4D4">&#160;&#160;&#160;Compiling&#160;hello&#160;v0.1.0&#160;(/private/tmp/qdemo/hello)</text>
+<text x="24" y="306" fill="#D4D4D4">&#160;&#160;&#160;&#160;Finished&#160;`dev`&#160;profile&#160;[unoptimized&#160;+&#160;debuginfo]&#160;target(s)&#160;in&#160;0.14s</text>
+<text x="24" y="328" fill="#D4D4D4">&#160;&#160;&#160;&#160;&#160;Running&#160;`target/debug/hello`</text>
+<text x="24" y="350" fill="#D4D4D4">Hello,&#160;world!</text>
+</g></svg>
