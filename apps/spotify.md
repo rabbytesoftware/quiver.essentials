@@ -26,7 +26,7 @@ Not supported: **Linux**. Spotify publishes its Linux client only as a Debian pa
 
 - **Spotify keeps itself up to date.** Quiver installs the current build; from then on Spotify's own updater installs new versions, as it does when installed by hand.
 - **The downloads are not versioned, so they are not checksum-verified.** Spotify serves its installers from fixed addresses that it replaces in place with each release, which can be as often as weekly, so Quiver cannot pin a checksum without the install breaking after the next release. Quiver therefore installs whatever Spotify currently publishes at those addresses, downloaded over HTTPS directly from Spotify, without a checksum check.
-- **On Windows, Spotify installs into your user profile** (`%APPDATA%\Spotify`), not into Quiver's folder, and runs without administrator rights. Uninstalling through Quiver runs Spotify's own uninstaller.
+- **On Windows, Spotify installs into your user profile** (`%APPDATA%\Spotify`), not into Quiver's folder, and runs without administrator rights. Spotify's own silent uninstaller does not actually remove it, so uninstalling through Quiver stops Spotify and deletes that folder, its Start Menu shortcut and its entry in Windows' app list.
 - **On macOS your data stays outside the app** (`~/Library/Application Support/Spotify` and its caches), so removing the arrow does not delete your cache or downloaded music.
 - **Already have Spotify?** Quiver never replaces an app it did not install. If `Spotify.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
 - **A Spotify account is required** to listen.
@@ -99,8 +99,10 @@ targets:
   # per user into %APPDATA%\Spotify without elevation (winget's manifest for
   # Spotify.Spotify uses `/silent /skip-app-launch` with scope user and
   # elevation prohibited) and creates its own Start Menu shortcut, so there is
-  # no `expose`. The uninstaller is the Spotify.exe the installer leaves in
-  # %APPDATA%\Spotify.
+  # no `expose`. Spotify's own silent uninstall (Spotify.exe /uninstall, the
+  # registered uninstall.exe) did not remove anything when tested, so
+  # `uninstall` stops Spotify and deletes the per-user install, its shortcut and
+  # its Uninstall registry key itself.
   "windows/*":
     requirements:
       cpu_cores: 2
@@ -122,7 +124,7 @@ targets:
       uninstall:
         - type: run
           title: Uninstall Spotify
-          command: 'if exist "%APPDATA%\Spotify\Spotify.exe" "%APPDATA%\Spotify\Spotify.exe" /uninstall /silent & del /f /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Spotify.lnk"'
+          command: 'taskkill /F /IM Spotify.exe >nul 2>&1 & rmdir /s /q "%APPDATA%\Spotify" & del /f /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Spotify.lnk" & reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\Spotify" /f >nul 2>&1'
           timeout: 5m
           exit_on_failure: false
 ```
