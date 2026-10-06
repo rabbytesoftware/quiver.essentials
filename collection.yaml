@@ -74,8 +74,6 @@ arrows:
   - auid: pumble
     path: apps/pumble
 
-  - auid: calibre
-    path: apps/calibre
 
   - auid: keepassxc
     path: apps/keepassxc
