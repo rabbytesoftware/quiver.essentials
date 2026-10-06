@@ -109,7 +109,7 @@ targets:
         # file, so the arrow's own icon is downloaded next to the app.
         - type: fetch
           title: Download the Codex icon
-          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/essentials-test/media/codex/icon.png
+          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/codex/icon.png
           checksum: f0b4379f8c96426f50f06481e197007e9171a8e1ec498d2f5b8a8a50a8a1964c
           to: ${INSTALL_PATH}/desktop/codex-icon.png
           timeout: 2m

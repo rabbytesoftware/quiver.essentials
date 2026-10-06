@@ -103,7 +103,7 @@ targets:
           timeout: 1m
         - type: fetch
           title: Download the DOOM page
-          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/essentials-test/apps-assets/doom/index.html
+          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/apps-assets/doom/index.html
           checksum: 41a4cdfa48d62c68cff5bf1e1d9c1dea5a21d7b48a4fcc50aabc45c1ca981ff2
           to: ${INSTALL_PATH}/ui/index.html
           timeout: 2m
