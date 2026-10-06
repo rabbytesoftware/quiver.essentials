@@ -36,7 +36,7 @@ Every download is pinned to an official Brave release from [Brave's GitHub relea
 
 ## License and trademarks
 
-Brave is free software by Brave Software, Inc., released under the [Mozilla Public License 2.0](https://github.com/brave/brave-browser/blob/master/LICENSE). This arrow only downloads Brave's official builds from its GitHub releases. The Brave name and lion logo are trademarks of Brave Software, Inc.; the icon is the product logo from the [brave-core repository](https://github.com/brave/brave-core), the banner was generated from it, and the screenshots come from Brave's official Microsoft Store listing.
+Brave is free software by Brave Software, Inc., released under the [Mozilla Public License 2.0](https://github.com/brave/brave-browser/blob/master/LICENSE). This arrow only downloads Brave's official builds from its GitHub releases. The Brave name and lion logo are trademarks of Brave Software, Inc.; the icon is the product logo from the [brave-core repository](https://github.com/brave/brave-core), the banner is the social image from [brave.com](https://brave.com), and the screenshots come from Brave's official Microsoft Store listing.
 
 ```arrow
 schema: "arrow@v0"
@@ -55,7 +55,7 @@ metadata:
       url: https://brave.com
   media:
     icon: https://raw.githubusercontent.com/brave/brave-core/v1.96.61/app/theme/brave/product_logo.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/brave/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/brave/banner.png
   tags:
     - browser
     - privacy

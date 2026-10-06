@@ -39,7 +39,7 @@ npx --yes cowsay "hello"
 
 ## License and trademarks
 
-Node.js is free software released under the [MIT License](https://github.com/nodejs/node/blob/main/LICENSE) by the OpenJS Foundation and Node.js contributors; npm and the other bundled components carry their own licenses, listed in that file. This arrow only downloads official builds from nodejs.org. Node.js and the Node.js logo are trademarks of the OpenJS Foundation; the icon comes from the [nodejs.org repository](https://github.com/nodejs/nodejs.org), the banner was generated from it, and the terminal capture shows the real output of a Node.js installed with this arrow.
+Node.js is free software released under the [MIT License](https://github.com/nodejs/node/blob/main/LICENSE) by the OpenJS Foundation and Node.js contributors; npm and the other bundled components carry their own licenses, listed in that file. This arrow only downloads official builds from nodejs.org. Node.js and the Node.js logo are trademarks of the OpenJS Foundation; the icon comes from the [nodejs.org repository](https://github.com/nodejs/nodejs.org), the banner is the official Node.js logo from the same repository on a dark green background, and the terminal capture shows the real output of a Node.js installed with this arrow.
 
 ```arrow
 schema: "arrow@v0"

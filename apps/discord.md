@@ -34,7 +34,7 @@ Every download is pinned to an official Discord build and verified against its S
 
 ## License and trademarks
 
-Discord is proprietary software by Discord Inc., free to use under its [Terms of Service](https://discord.com/terms). This arrow only downloads Discord's official builds from Discord's own servers. The Discord name, logo and banner are trademarks of Discord Inc., used here as published in its [brand kit](https://discord.com/branding); the screenshots come from Discord's official Microsoft Store listing.
+Discord is proprietary software by Discord Inc., free to use under its [Terms of Service](https://discord.com/terms). This arrow only downloads Discord's official builds from Discord's own servers. The Discord name, logo and banner are trademarks of Discord Inc., used here as published in its [brand kit](https://discord.com/branding): the banner combines the kit's official white logo with one of the kit's banner backgrounds; the screenshots come from Discord's official Microsoft Store listing.
 
 ```arrow
 schema: "arrow@v0"

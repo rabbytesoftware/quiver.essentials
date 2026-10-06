@@ -33,7 +33,7 @@ The download is pinned to an official Raycast build and verified against its SHA
 
 ## License and trademarks
 
-Raycast is proprietary software by Raycast Technologies Ltd., free to use under its [Terms of Service](https://www.raycast.com/terms-of-service). This arrow only downloads Raycast's official build from Raycast's own servers. The Raycast name and logo are trademarks of Raycast Technologies Ltd.; the icon comes from Raycast's [press kit](https://www.raycast.com/press), the banner was generated from it, and the screenshots come from [raycast.com](https://www.raycast.com).
+Raycast is proprietary software by Raycast Technologies Ltd., free to use under its [Terms of Service](https://www.raycast.com/terms-of-service). This arrow only downloads Raycast's official build from Raycast's own servers. The Raycast name and logo are trademarks of Raycast Technologies Ltd.; the icon comes from Raycast's [press kit](https://www.raycast.com/press), the banner is Raycast's own social image from [raycast.com](https://www.raycast.com) (2400x1260, trimmed to 2:1), and the screenshots come from [raycast.com](https://www.raycast.com).
 
 ```arrow
 schema: "arrow@v0"
@@ -52,7 +52,7 @@ metadata:
       url: https://www.raycast.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/raycast/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/raycast/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/raycast/banner.png
   tags:
     - launcher
     - productivity

@@ -1,11 +1,14 @@
 schema: "arrow@v0"
 
 metadata:
-  name: jurplel.qview
+  name: qView
   description: Practical and minimal image viewer, packaged as an AppImage — validates appimage-runtime end to end
   license: GPL-3.0
   quiver: github.com/rabbytesoftware/quiver.essentials
   url: https://interversehq.com/qview/
+  media:
+    icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/qview/icon.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/qview/banner.svg
   tags:
     - appimage
     - linux

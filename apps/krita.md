@@ -32,7 +32,7 @@ Every download is pinned to an official Krita release from [download.kde.org](ht
 
 ## License and trademarks
 
-Krita is free software released as a whole under the [GNU General Public License, version 3](https://invent.kde.org/graphics/krita/-/blob/master/COPYING) by the Krita developers and the KDE community; individual files may carry compatible licenses. This arrow only downloads Krita's official builds from download.kde.org. The Krita name and logo belong to the Krita Foundation; the icon is Krita's app icon from its [source repository](https://invent.kde.org/graphics/krita), the banner was generated from it, and the screenshots come from Krita's official Microsoft Store listing.
+Krita is free software released as a whole under the [GNU General Public License, version 3](https://invent.kde.org/graphics/krita/-/blob/master/COPYING) by the Krita developers and the KDE community; individual files may carry compatible licenses. This arrow only downloads Krita's official builds from download.kde.org. The Krita name and logo belong to the Krita Foundation; the icon is Krita's app icon from its [source repository](https://invent.kde.org/graphics/krita), the banner sets the icon and a Krita screenshot from that listing on a dark background, with the name as plain text, and the screenshots come from Krita's official Microsoft Store listing.
 
 ```arrow
 schema: "arrow@v0"

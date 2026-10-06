@@ -51,7 +51,7 @@ docker buildx build .
 
 ## License and trademarks
 
-Docker Desktop is proprietary software by Docker, Inc., licensed under the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/). The Docker Engine, CLI, Compose, Buildx and RootlessKit installed on Linux are free software released under the [Apache License 2.0](https://github.com/moby/moby/blob/master/LICENSE) by their authors and contributors. This arrow only downloads Docker's official builds. Docker and the Docker logo are trademarks of Docker, Inc.; the icon is the Docker mark from Docker's [logo kit](https://www.docker.com/company/newsroom/media-resources/), unmodified and placed on a square canvas, the banner was generated from it, the Docker Desktop screenshot comes from Docker's [Docker Desktop page](https://www.docker.com/products/docker-desktop/), and the terminal capture shows the real output of the rootless setup this arrow installs on Linux.
+Docker Desktop is proprietary software by Docker, Inc., licensed under the [Docker Subscription Service Agreement](https://www.docker.com/legal/docker-subscription-service-agreement/). The Docker Engine, CLI, Compose, Buildx and RootlessKit installed on Linux are free software released under the [Apache License 2.0](https://github.com/moby/moby/blob/master/LICENSE) by their authors and contributors. This arrow only downloads Docker's official builds. Docker and the Docker logo are trademarks of Docker, Inc.; the icon is the Docker mark from Docker's [logo kit](https://www.docker.com/company/newsroom/media-resources/), unmodified and placed on a square canvas, the banner is the social image from [docs.docker.com](https://docs.docker.com), the Docker Desktop screenshot comes from Docker's [Docker Desktop page](https://www.docker.com/products/docker-desktop/), and the terminal capture shows the real output of the rootless setup this arrow installs on Linux.
 
 ```arrow
 schema: "arrow@v0"
@@ -72,7 +72,7 @@ metadata:
       url: https://www.docker.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/docker/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/docker/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/docker/banner.png
   tags:
     - containers
     - developer-tools

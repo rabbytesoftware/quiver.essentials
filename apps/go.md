@@ -39,7 +39,7 @@ go run .
 
 ## License and trademarks
 
-Go is free software released by the Go Authors under a [BSD-style license](https://go.dev/LICENSE). This arrow only downloads Go's official releases from go.dev. Go and the Go logo are trademarks of Google LLC. The icon is the gopher from [go.dev](https://go.dev) (the Go gopher was designed by Renée French and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)); the banner was generated from it, and the terminal capture shows the real output of a Go installed with this arrow.
+Go is free software released by the Go Authors under a [BSD-style license](https://go.dev/LICENSE). This arrow only downloads Go's official releases from go.dev. Go and the Go logo are trademarks of Google LLC. The icon is the gopher from [go.dev](https://go.dev) (the Go gopher was designed by Renée French and is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)); the banner sets that gopher beside the official Go logo from the same [go.dev repository](https://github.com/golang/website) on Go's blue, and the terminal capture shows the real output of a Go installed with this arrow.
 
 ```arrow
 schema: "arrow@v0"
