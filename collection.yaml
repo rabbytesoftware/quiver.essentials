@@ -21,8 +21,7 @@ arrows:
 
   # Flat form (no explicit auid): identity derives from path's last segment,
   # same as before this feature — kept simple since qview has no reason to
-  # live anywhere but this repo's root. Depends on appimage-runtime above and
-  # exercises it end to end.
+  # live anywhere but this repo's root.
   - path: qview
 
   # Desktop apps, grouped under apps/; their media live in media/<auid>/.

@@ -62,6 +62,9 @@ metadata:
 # Blender 5.2.2, the current Long-Term Support release, with the SHA-256 from
 # download.blender.org/release/Blender5.2/blender-5.2.2.sha256 (the macOS,
 # Linux x64 and Windows x64 files were also hashed after downloading).
+# download.blender.org keeps every release (checked: 5.2.0, 5.2.1, 4.5.0,
+# 4.2.0, 3.6.0 and 2.93.0 still download with their original dates), so the
+# pinned URLs and digests do not rot.
 # Blender 5 ships no Intel macOS and no Linux ARM build, so those are not
 # claimed. Requirements are Blender's published minimums
 # (blender.org/download/requirements).

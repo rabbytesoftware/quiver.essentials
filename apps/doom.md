@@ -82,8 +82,11 @@ metadata:
 # the project's examples/browser/doom.html with small Quiver changes (window
 # fitting and keyboard focus; see apps-assets/doom/index.html). The page loads
 # assets/doom.wasm by a relative path and becomes the served index.html. It is
-# fetched from this repository's master by raw URL, so its checksum must be
-# updated whenever that file changes (pin the URL to a commit once merged). Nothing is built or written outside the
+# fetched from this repository at the same ref as this manifest (${REF}), so
+# each ref sees its own copy of the file and the checksum below, and a later
+# edit of the page cannot break an older ref. Update the checksum whenever
+# apps-assets/doom/index.html changes. The wasm is a GitHub release asset
+# (permanent: release assets stay as long as the release exists). Nothing is built or written outside the
 # workdir; `uninstall` only undoes the mkdir. Requirements are estimates: upstream
 # states about 16 MB of module memory.
 targets:
@@ -103,7 +106,7 @@ targets:
           timeout: 1m
         - type: fetch
           title: Download the DOOM page
-          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/apps-assets/doom/index.html
+          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/${REF}/apps-assets/doom/index.html
           checksum: 41a4cdfa48d62c68cff5bf1e1d9c1dea5a21d7b48a4fcc50aabc45c1ca981ff2
           to: ${INSTALL_PATH}/ui/index.html
           timeout: 2m

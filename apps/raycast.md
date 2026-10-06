@@ -24,11 +24,12 @@ Raycast is a launcher for the Mac: one keyboard shortcut opens a search bar that
 | Windows | No | Raycast for Windows ships as an MSIX package, a format Quiver cannot install. Get it from [raycast.com/windows](https://www.raycast.com/windows). |
 | Linux | No | There is no Raycast for Linux. |
 
-The download is pinned to an official Raycast build and verified against its SHA-256 checksum before it is installed.
+Quiver downloads the current official Raycast build for Apple silicon from Raycast's own servers over HTTPS. Raycast publishes no checksum and only keeps a rolling "latest" address, so this download is **not checksum-verified**.
 
 ### Good to know
 
-- **Raycast keeps itself up to date.** Quiver installs the build pinned here; from then on Raycast's own updater installs new versions.
+- **The download is not checksum-verified.** It comes over HTTPS from Raycast's own servers; Raycast offers only a rolling "latest" address, so a fixed checksum would stop matching with the next build.
+- **Raycast keeps itself up to date.** Quiver installs the build current at install time; from then on Raycast's own updater installs new versions.
 - **Already have Raycast?** Quiver never replaces an app it did not install. If `Raycast.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
 
 ## License and trademarks
@@ -62,7 +63,12 @@ metadata:
 # macOS 26 or later (LSMinimumSystemVersion 26.0). Raycast for Windows ships
 # as MSIX, which Quiver cannot install, and there is no Linux build.
 targets:
-  # The versioned file raycast.com/download redirects to. Raycast updates
+  # Raycast's stable "latest" endpoint (the one raycast.com/download redirects
+  # to), which answers with a 302 to the current versioned DMG. It is used
+  # instead of that versioned file because Raycast ships new builds every few
+  # days (2.6.2 was already superseded by 2.6.3 when this was written) and
+  # publishes no retention policy or checksum list, so a pinned URL or digest
+  # would rot: the download is therefore not checksum-verified. Raycast updates
   # itself after install. Requirements are conservative estimates: Raycast
   # publishes no hardware minimums.
   darwin/arm64:
@@ -74,8 +80,7 @@ targets:
       install:
         - type: fetch
           title: Download Raycast
-          url: https://x-r2.raycast-releases.com/Raycast_2.6.2.0_49937c9d92_arm64.dmg
-          checksum: 15e4bbaa22bf2c439783f26ce3d33f35afa9a618080112197469aa5c18f4c5dc
+          url: https://x.raycast-releases.com/download/web?platform=macos&architecture=arm64
           to: ${INSTALL_PATH}/.raycast.download
           timeout: 15m
         - type: portable

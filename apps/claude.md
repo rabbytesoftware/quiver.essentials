@@ -1,4 +1,4 @@
-Claude is Anthropic's AI assistant. This arrow installs it two ways at once: **Claude Code**, the coding agent that lives in your terminal, as the `claude` command on every platform Anthropic builds it for, and the **Claude desktop app**, where Anthropic ships one: macOS, Windows and Linux.
+Claude is Anthropic's AI assistant. This arrow installs it two ways at once: **Claude Code**, the coding agent that lives in your terminal, as the `claude` command on every platform Anthropic builds it for, and the **Claude desktop app** on macOS and Windows.
 
 ![Claude Code working in a terminal](https://raw.githubusercontent.com/anthropics/claude-code/v2.1.291/demo.gif)
 
@@ -14,7 +14,7 @@ Claude is Anthropic's AI assistant. This arrow installs it two ways at once: **C
 | Platform | What Quiver installs |
 |---|---|
 | macOS (Apple silicon and Intel) | The `claude` command, and `Claude.app` in Applications from Anthropic's official build for your processor. Requires macOS 11 or later. |
-| Linux (x86_64 and ARM64) | The `claude` command (glibc build), and the Claude desktop app (beta), unpacked from Anthropic's official `.deb` into Quiver's folder with a desktop menu entry. |
+| Linux (x86_64 and ARM64) | The `claude` command (glibc build) only. Anthropic ships the Linux desktop app only as a `.deb`, which has no AppImage or tarball equivalent, so there is no Linux desktop app here. |
 | Windows (x64 and ARM64) | The `claude` command, and the Claude desktop app, unpacked from Anthropic's official update package into Quiver's folder with a Start Menu shortcut. Requires Windows 10 or later. |
 
 Every download is pinned to an official Anthropic build (Claude Code 2.1.291, Claude desktop 2.19675.1) and verified against its SHA-256 checksum. Run `quiver path setup` once so your shell finds the `claude` command.
@@ -23,7 +23,6 @@ Every download is pinned to an official Anthropic build (Claude Code 2.1.291, Cl
 
 - **Pinned versions, updates through Quiver.** Claude Code can also update itself; to keep versions under Quiver's control set `DISABLE_AUTOUPDATER=1`. The desktop builds installed here are not wired to Anthropic's installers, so they do not update themselves: install a newer arrow release to move to a newer version.
 - **Linux builds for musl systems (such as Alpine) are not covered.** Anthropic publishes separate musl CLI binaries; this arrow installs the glibc ones.
-- **On Linux the desktop app is unpacked without root.** The package unpack needs `dpkg-deb`, or `ar` and `xz`, which any Debian-family system has and most others provide in `binutils` and `xz`. Because Quiver cannot install the package's AppArmor profile or its setuid sandbox helper, Ubuntu 24.04 and later (which restrict unprivileged user namespaces) may refuse to start the app; if so, install Anthropic's `.deb` with `apt`, which sets that up, instead. Anthropic's Linux build does not offer computer use or dictation, and Cowork there needs KVM virtualization.
 - **Windows desktop is the app's own update package, run in place.** Anthropic's usual Windows installer (and its MSIX) are not offered at a pinnable address, so Quiver unpacks the exact package the installer would deploy. It has not been tested here against every feature of the app; if something needs Windows app identity, install Anthropic's MSIX instead.
 - **Already have Claude.app?** Quiver never replaces an app it did not install: if `Claude.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
 - **Minimum hardware**: Anthropic publishes no minimums for the CLI; the arrow asks for 4 GB of memory and 2 cores as a conservative estimate.
@@ -60,21 +59,22 @@ metadata:
 # downloads.claude.ai/claude-code-releases/<version>/<platform>/claude, with
 # the SHA-256 from that release's manifest.json (the same file claude.ai/install.sh
 # trusts). Claude desktop 2.19675.1: macOS zips and Windows Squirrel packages from
-# downloads.claude.ai/releases, Linux .deb from Anthropic's apt pool; macOS and
-# Linux checksums were hashed from the files (the Linux ones match the apt
-# Packages index), the Windows ones from the nupkg (its SHA-1 matches Anthropic's
-# RELEASES file). Anthropic keeps only recent builds listed, so a pinned URL can
-# disappear once it is rotated out. Requirements are estimates: Anthropic
+# downloads.claude.ai/releases; the macOS checksums were hashed from the files, the
+# Windows ones from the nupkg (its SHA-1 matches Anthropic's
+# RELEASES file). Anthropic does not delete old builds: checked 2026-10-06,
+# when 2.26454.0 was already out, the pinned 2.19675.1 macOS zips and Windows
+# nupkgs still downloaded, older nupkgs (2.7032.0) did too, and Claude Code binaries and manifests back to 1.0.100 remain.
+# Anthropic's only floating desktop addresses sit behind a Cloudflare challenge
+# that a downloader cannot pass, so pinning is the safe choice. Requirements are estimates: Anthropic
 # publishes none for the CLI.
 targets:
-  # Linux: glibc CLI binary, plus the desktop app from the .deb, unpacked per
-  # user (a .deb is an ar archive, which `extract` does not read, so a `run`
-  # step unpacks it and `uninstall` removes the result).
+  # Linux: the glibc CLI binary only. Anthropic ships the Linux desktop app
+  # only as a .deb, which Quiver does not unpack (no AppImage or tarball exists).
   "linux/*":
     requirements:
       cpu_cores: 2
       ram_gb: 4
-      disk_gb: 3
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch
@@ -93,35 +93,10 @@ targets:
           to: ${INSTALL_PATH}/bin
           name: claude
           timeout: 5m
-        - type: fetch
-          title: Download Claude desktop
-          url:
-            linux/amd64: https://downloads.claude.ai/claude-desktop/apt/stable/pool/main/c/claude-desktop/claude-desktop_2.19675.1_amd64.deb
-            linux/arm64: https://downloads.claude.ai/claude-desktop/apt/stable/pool/main/c/claude-desktop/claude-desktop_2.19675.1_arm64.deb
-          checksum:
-            linux/amd64: 9ba127eeccf270f6e60d35f5c5333654053bf0540c88fc82a009d01711b106fc
-            linux/arm64: 681d122ae97d0eb302f0e6d92c7f232847064bb01746458dc50a2c095a40ed12
-          to: ${INSTALL_PATH}/.claude-desktop.deb
-          timeout: 20m
-        - type: run
-          title: Unpack Claude desktop
-          command: 'mkdir -p desktop && if command -v dpkg-deb >/dev/null 2>&1; then dpkg-deb -x .claude-desktop.deb desktop; else ar p .claude-desktop.deb data.tar.xz | tar -xJ -C desktop; fi && rm -f .claude-desktop.deb'
-          timeout: 10m
-      uninstall:
-        - type: run
-          title: Remove Claude desktop
-          command: 'rm -rf desktop .claude-desktop.deb'
-          timeout: 5m
-          exit_on_failure: false
     expose:
       cli:
         - name: claude
           path: ${INSTALL_PATH}/bin/claude
-      desktop:
-        - name: Claude
-          path: ${INSTALL_PATH}/desktop/usr/lib/claude-desktop/claude-desktop
-          icon: ${INSTALL_PATH}/desktop/usr/share/icons/hicolor/256x256/apps/claude-desktop.png
-          categories: [Utility, Development]
 
   # macOS: native CLI binary per processor, plus Claude.app from Anthropic's
   # per-processor zip. `portable` records the app and moves it to Applications.

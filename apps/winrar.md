@@ -62,6 +62,9 @@ metadata:
 # WinRAR 7.23 (English, x64), the stable release on rarlab.com (the 7.30 beta
 # is not used). RARLAB publishes no digests, so the SHA-256 was computed on
 # the download; it matches the winget-pkgs manifest for RARLab.WinRAR 7.23.0.
+# rarlab.com keeps its versioned installers (checked: 5.90 from 2020, 6.00,
+# 6.23, 7.01, 7.13, 7.21 and 7.22 all still download with their original
+# Last-Modified dates), so this versioned URL and its digest do not rot.
 # Windows only: RARLAB ships WinRAR for x64 only (its download page lists no ARM64 build), and the Linux/macOS `rar` tools are command-line packages this
 # arrow does not cover. Requirements are conservative estimates.
 targets:

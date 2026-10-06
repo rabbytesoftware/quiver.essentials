@@ -22,12 +22,12 @@ Steam is Valve's game store and library: buy, download and update games, keep yo
 
 Not supported: Linux on ARM and Windows on ARM, where Valve publishes no Steam client of its own.
 
-The Linux package and both installers are pinned to Valve's builds and verified against their SHA-256 checksums.
+The Linux package is pinned to Valve's numbered release 1.0.0.87 and verified against the SHA-256 Valve signs for it. The Windows and macOS installers are the current ones Valve serves, downloaded over HTTPS from Valve and not checksum-verified, because Valve publishes no fixed version or checksum for them.
 
 ### Good to know
 
 - **Steam updates itself.** What Quiver pins is only the small launcher or installer. On first launch Steam downloads its current client, then keeps it updated on its own, so after the first run you are no longer on the pinned version, as with a normal Steam install.
-- **The installers are not versioned downloads.** Valve serves `SteamSetup.exe` and `steam.dmg` from fixed addresses that it replaces in place (the Windows one last changed in May 2024, the macOS one in March 2026). If Valve publishes a new one, the checksum no longer matches and the install fails until this arrow is updated; the Linux package is a numbered release and does not have this problem.
+- **The Windows and macOS installers are not checksum-verified.** Valve serves `SteamSetup.exe` and `steam.dmg` from fixed addresses that it replaces in place, so Quiver always gets the current installer, over HTTPS from Valve, with no digest to compare it against. The Linux package is a numbered release and is verified.
 - **Linux stores Steam outside Quiver's folder.** On first launch the launcher unpacks the client into `~/.local/share/Steam` and links it from `~/.steam`; your games and sign-in live there. Removing the arrow deletes the launcher but leaves that folder, so delete it yourself to remove everything. The launcher may also ask for your password to install missing 32-bit system packages (it uses `pkexec` or `sudo` on Debian and Ubuntu); on other distributions install your distribution's `steam` dependencies yourself.
 - **Windows needs administrator approval.** Steam's installer requires elevation, which Quiver cannot grant. Quiver starts it through PowerShell, and Windows shows the approval prompt; if you decline, the install fails. Uninstalling asks for approval too. This path was not tested on real Windows when the arrow was written.
 - **macOS keeps data in** `~/Library/Application Support/Steam`, outside the app.
@@ -62,7 +62,11 @@ metadata:
     - desktop
 
 # Steam updates itself after the first launch on every platform, so what is
-# pinned here is only the launcher/installer. Requirements are conservative
+# installed here is only the launcher/installer. The Linux package is a
+# numbered release in Valve's apt archive, which still serves releases back to
+# 2020 (1.0.0.66, 1.0.0.75 and 1.0.0.85 all answer 200), so it stays pinned with
+# the checksum Valve signs in its .dsc. The Windows and macOS installers exist
+# only at rolling addresses, so they carry no checksum. Requirements are conservative
 # estimates (Valve publishes no hardware minimums for the client itself; games
 # need more disk, which is the user's to provide).
 targets:
@@ -101,8 +105,9 @@ targets:
 
   # steam.dmg holds Steam.app, an x86_64-only bundle (its Info.plist asks for
   # macOS 10.13 or later); Apple silicon runs it under Rosetta 2. Valve serves
-  # it from a fixed address it replaces in place (last modified 2026-03-17),
-  # so the checksum below is a snapshot of that file.
+  # it from a fixed address it replaces in place, so there is no stable
+  # checksum: the download is NOT checksum-verified (HTTPS from Valve only).
+  # Steam updates itself after the first launch anyway.
   "darwin/*":
     requirements:
       cpu_cores: 2
@@ -113,7 +118,6 @@ targets:
         - type: fetch
           title: Download Steam
           url: https://cdn.fastly.steamstatic.com/client/installer/steam.dmg
-          checksum: e1abfbaaa7be3e0f48a0e0d4c313233e05861b1d26af32830ddc838be88f2691
           to: ${INSTALL_PATH}/.steam.download
           timeout: 10m
         - type: portable
@@ -126,8 +130,8 @@ targets:
         - name: Steam
           path: auto
 
-  # SteamSetup.exe (NSIS, 32-bit, last modified 2024-05-20, a fixed address
-  # Valve replaces in place) declares requireAdministrator in its manifest, so
+  # SteamSetup.exe (NSIS, 32-bit; a fixed address Valve replaces in place, so
+  # it is NOT checksum-verified, HTTPS from Valve only) declares requireAdministrator in its manifest, so
   # it cannot run from Quiver's unelevated process: it is started through
   # PowerShell's Start-Process -Verb RunAs, which shows the UAC prompt, with
   # NSIS's /S for a silent install into Program Files (x86)\Steam. It creates
@@ -143,7 +147,6 @@ targets:
         - type: fetch
           title: Download the Steam installer
           url: https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe
-          checksum: 7d3654531c32d941b8cae81c4137fc542172bfa9635f169cb392f245a0a12bcb
           to: ${INSTALL_PATH}/SteamSetup.exe
           timeout: 10m
         - type: run

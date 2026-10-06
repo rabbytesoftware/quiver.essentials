@@ -20,16 +20,16 @@ Pumble is a team chat app from CAKE.com with a free plan: channels for topics an
 | Platform | What Quiver installs |
 |---|---|
 | macOS (Apple silicon and Intel) | Pumble's universal DMG, as `Pumble.app` in Applications. Requires macOS 12 or later. |
-| Linux (x86_64) | The contents of Pumble's official `.deb` package, unpacked in Quiver's folder, with a desktop menu entry. Pumble publishes no Linux build for ARM. Needs `ar` (binutils) and `tar` with xz support, or `dpkg-deb`. |
 | Windows (x64) | Pumble's official installer, run silently for your user. |
 | Windows (ARM64) | Not supported: Pumble's Windows installer contains only an x64 build. |
+
+Not supported: **Linux**. Pumble publishes its Linux client only as `.deb` and `.rpm` packages, with no AppImage or tarball that Quiver can unpack on every distribution, so this arrow does not support Linux.
 
 Every download is pinned to Pumble 1.4.71 from pumble.com and verified against its SHA-256 checksum. Pumble publishes no checksums, so the digests were computed from the files at the time of writing.
 
 ### Good to know
 
 - **Pumble checks for updates itself.** Its builds ship with an update feed on pumble.com; Quiver installs the version pinned here, and a newer Quiver release of this arrow moves you to a newer one.
-- **Linux is a rootless repackaging of the `.deb`.** Pumble publishes Linux only as `.deb` and `.rpm`, so Quiver unpacks the package into its own folder without installing it. The setuid sandbox helper is therefore not set up, and on distributions that restrict unprivileged user namespaces (such as Ubuntu 24.04 and later) Pumble may refuse to start without `--no-sandbox`.
 - **On Windows, Pumble installs into your user profile**, not into Quiver's folder, and adds its own shortcuts. Uninstalling through Quiver runs the uninstaller Pumble registered for your user.
 - **Already have Pumble?** Quiver never replaces an app it did not install. If `Pumble.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
 - **Requirements**: Pumble does not publish hardware minimums; Quiver asks for 2 cores and 4 GB of memory as a conservative estimate.
@@ -67,38 +67,6 @@ metadata:
 # below were computed from the downloaded files. Pumble publishes no hardware
 # minimums; requirements are conservative estimates.
 targets:
-  # Linux ships only as .deb/.rpm (amd64 only). Quiver cannot unpack a .deb,
-  # so a `run` step does it rootlessly into the workdir (dpkg-deb, else
-  # ar + tar), which needs an `uninstall`.
-  linux/amd64:
-    requirements:
-      cpu_cores: 2
-      ram_gb: 4
-      disk_gb: 2
-    lifecycle:
-      install:
-        - type: fetch
-          title: Download Pumble
-          url: https://pumble.com/download/desktop/linux/Pumble-linux-1.4.71.deb
-          checksum: cdf9ca78d2b63c89f9e6d949b022e39bfe91d448edc31a4fa9319b452eacbe85
-          to: ${INSTALL_PATH}/.pumble.deb
-          timeout: 10m
-        - type: run
-          title: Unpack Pumble
-          command: 'mkdir -p app && (dpkg-deb -x .pumble.deb app || (cd app && ar x ../.pumble.deb data.tar.xz && tar -xf data.tar.xz && rm -f data.tar.xz))'
-          timeout: 5m
-      uninstall:
-        - type: run
-          title: Remove Pumble
-          command: 'rm -rf app .pumble.deb'
-          timeout: 2m
-          exit_on_failure: false
-    expose:
-      desktop:
-        - name: Pumble
-          path: ${INSTALL_PATH}/app/opt/Pumble/pumble-desktop
-          icon: ${INSTALL_PATH}/app/usr/share/icons/hicolor/256x256/apps/pumble-desktop.png
-          categories: [Network, Office]
 
   # One universal (x86_64 + arm64) DMG; requires macOS 12 or later.
   "darwin/*":

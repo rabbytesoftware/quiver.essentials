@@ -19,7 +19,7 @@
 | macOS (Apple silicon and Intel) | 7-Zip's official command-line build, a single universal `7zz` for both processors, with `7zz` and `7z` on your `PATH`. There is no graphical 7-Zip for macOS. |
 | Windows (x64 and ARM64) | 7-Zip's official installer package for your processor, unpacked into Quiver's folder: the console tool `7z`, the file manager `7zFM` (with a Start Menu shortcut) and `7zG`. No administrator rights are needed. |
 
-Every download is pinned to 7-Zip 26.04 (2026-10-05) from [7-zip.org](https://www.7-zip.org/download.html) and verified against its SHA-256 checksum. 7-Zip does not publish builds for 32-bit Linux or Windows, which Quiver does not target.
+Every download is pinned to 7-Zip 26.04 (2026-10-05) from the [official 7-Zip release on GitHub](https://github.com/ip7z/7zip/releases/tag/26.04), the same files 7-zip.org offers, and verified against its SHA-256 checksum. 7-Zip does not publish builds for 32-bit Linux or Windows, which Quiver does not target.
 
 Run `quiver path setup` once so your shell finds `~/.quiver/bin` (Linux and macOS), then try:
 
@@ -39,7 +39,7 @@ Run `quiver path setup` once so your shell finds `~/.quiver/bin` (Linux and macO
 
 ## License and trademarks
 
-7-Zip is free software by Igor Pavlov, under the GNU LGPL (version 2.1 or later) with parts of `7z.dll` under the BSD licenses and parts under the LGPL with the "unRAR license restriction"; see its [license terms](https://www.7-zip.org/license.txt). This arrow only downloads 7-Zip's official builds from 7-zip.org. The icon is 7-Zip's File Manager icon from its [source repository](https://github.com/ip7z/7zip), unmodified and placed in a square SVG, and the banner was designed for this arrow around that same icon (enlarged by a whole-number factor, pixel for pixel) with the product name set beside it. The screenshot is the 7-Zip File Manager, captured on Windows 11 while testing this arrow.
+7-Zip is free software by Igor Pavlov, under the GNU LGPL (version 2.1 or later) with parts of `7z.dll` under the BSD licenses and parts under the LGPL with the "unRAR license restriction"; see its [license terms](https://www.7-zip.org/license.txt). This arrow only downloads 7-Zip's official builds from its GitHub releases. The icon is 7-Zip's File Manager icon from its [source repository](https://github.com/ip7z/7zip), unmodified and placed in a square SVG, and the banner was designed for this arrow around that same icon (enlarged by a whole-number factor, pixel for pixel) with the product name set beside it. The screenshot is the 7-Zip File Manager, captured on Windows 11 while testing this arrow.
 
 ```arrow
 schema: "arrow@v0"
@@ -65,8 +65,12 @@ metadata:
     - cli
     - desktop
 
-# 7-Zip 26.04 (2026-10-05) from 7-zip.org. The SHA-256 values were computed on
-# the downloads and match the digests on the ip7z/7zip GitHub release.
+# 7-Zip 26.04 (2026-10-05), as release assets of github.com/ip7z/7zip (tag
+# 26.04): GitHub release assets are immutable per tag and old tags keep theirs.
+# 7-zip.org serves the same files, but its /a/7zr.exe is a rolling address
+# replaced on every release, so nothing is downloaded from there. The SHA-256
+# values were computed on the 7-zip.org downloads and match the digests GitHub
+# publishes for these assets.
 # Requirements are conservative estimates: 7-Zip publishes none.
 targets:
   # Official console build (7zz, plus the static 7zzs): a tar.xz whose files
@@ -81,8 +85,8 @@ targets:
         - type: fetch
           title: Download 7-Zip
           url:
-            linux/amd64: https://www.7-zip.org/a/7z2604-linux-x64.tar.xz
-            linux/arm64: https://www.7-zip.org/a/7z2604-linux-arm64.tar.xz
+            linux/amd64: https://github.com/ip7z/7zip/releases/download/26.04/7z2604-linux-x64.tar.xz
+            linux/arm64: https://github.com/ip7z/7zip/releases/download/26.04/7z2604-linux-arm64.tar.xz
           checksum:
             linux/amd64: fc0327ba27e89bd086cf426dff17d77de582953cdbbc10a6576540a06853ffcd
             linux/arm64: 5b0ac3aa91c1e3499f011d6af69d7f6b4de3ef2f011d9e2ff44c58ebd04aa388
@@ -114,7 +118,7 @@ targets:
       install:
         - type: fetch
           title: Download 7-Zip
-          url: https://www.7-zip.org/a/7z2604-mac.tar.xz
+          url: https://github.com/ip7z/7zip/releases/download/26.04/7z2604-mac.tar.xz
           checksum: bee04358cbcbc7106273cee0e8d72916db2696c48067a3538c34d8cd6fd16578
           to: ${INSTALL_PATH}/.7zip.download
           timeout: 10m
@@ -149,15 +153,15 @@ targets:
       install:
         - type: fetch
           title: Download 7zr
-          url: https://www.7-zip.org/a/7zr.exe
+          url: https://github.com/ip7z/7zip/releases/download/26.04/7zr.exe
           checksum: 256feca8e274e5da655e2a284fabafd9f554365eb164862089dacd4e8276d282
           to: ${INSTALL_PATH}/.7zr.exe
           timeout: 5m
         - type: fetch
           title: Download 7-Zip
           url:
-            windows/amd64: https://www.7-zip.org/a/7z2604-x64.exe
-            windows/arm64: https://www.7-zip.org/a/7z2604-arm64.exe
+            windows/amd64: https://github.com/ip7z/7zip/releases/download/26.04/7z2604-x64.exe
+            windows/arm64: https://github.com/ip7z/7zip/releases/download/26.04/7z2604-arm64.exe
           checksum:
             windows/amd64: d54bf805f9f3704d1e8db2fa3498ae7ef2df0312b40b558e7c71c734430a665d
             windows/arm64: d4117b95495b0e925334ae7b5bddf2853513274603de15dee6acf03999fbc09c

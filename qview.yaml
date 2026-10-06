@@ -2,7 +2,7 @@ schema: "arrow@v0"
 
 metadata:
   name: qView
-  description: Practical and minimal image viewer, packaged as an AppImage — validates appimage-runtime end to end
+  description: Practical and minimal image viewer
   license: GPL-3.0
   quiver: github.com/rabbytesoftware/quiver.essentials
   url: https://interversehq.com/qview/
@@ -14,39 +14,32 @@ metadata:
     - linux
     - image-viewer
 
+# qView 7.1, a GitHub release asset (permanent), with the SHA-256 GitHub records
+# for it. The AppImage is type 2, so `portable` unpacks it in pure Go with a
+# relocatable launcher: no FUSE, no libfuse2, no helper tool. The release
+# ships an x86_64 AppImage only, so this is linux/amd64. Requirements are
+# conservative estimates: qView publishes none.
 targets:
-  "linux/*":
-    tools:
-      - github.com/rabbytesoftware/quiver.essentials/appimage-runtime
-
+  linux/amd64:
+    requirements:
+      cpu_cores: 1
+      ram_gb: 1
+      disk_gb: 1
     lifecycle:
       install:
         - type: fetch
+          title: Download qView
           url: https://github.com/jurplel/qView/releases/download/7.1/qView-7.1-x86_64.AppImage
-          to: ./qView.AppImage
-          title: Downloading qView
+          checksum: f02db7a00a689a9ded6bcbd9be5b9d3ea0379b7c5123f8bfaac4749025a6051a
+          to: ${INSTALL_PATH}/.qview.download
           timeout: 5m
-
-        - type: run
-          command: ${github.com/rabbytesoftware/quiver.essentials/appimage-runtime.extract} ./qView.AppImage
-          title: Extracting qView AppImage
-          timeout: 1m
-
-      execute:
-        - type: run
-          command: ./squashfs-root/AppRun
-          title: Launching qView
-          timeout: 15s
-
-      stop:
-        - type: signal
-          signal: graceful
-          timeout: 10s
-          exit_on_failure: false
-
-      uninstall:
-        - type: run
-          command: rm -rf ./squashfs-root ./qView.AppImage
-          title: Removing qView
-          timeout: 30s
-          exit_on_failure: false
+        - type: portable
+          title: Install qView
+          from: ${INSTALL_PATH}/.qview.download
+          to: ${INSTALL_PATH}/qView
+          timeout: 5m
+    expose:
+      desktop:
+        - name: qView
+          path: auto
+          categories: [Graphics, Viewer]

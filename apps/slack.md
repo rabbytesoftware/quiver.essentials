@@ -16,16 +16,16 @@ Slack is a workspace for team communication: conversations are organised into ch
 | Platform | What Quiver installs |
 |---|---|
 | macOS (Apple silicon and Intel) | Slack's official universal DMG, as `Slack.app` in Applications. |
-| Linux (x86_64) | The contents of Slack's official `.deb` package, unpacked in Quiver's folder, with a desktop menu entry. Slack publishes no Linux build for ARM. Needs `ar` (binutils) and `tar` with xz support, or `dpkg-deb`. |
 | Windows (x64) | Slack's official installer, run silently for your user. It installs into your user profile and adds its own Start Menu shortcut. |
 | Windows (ARM64) | Slack's official native ARM64 MSIX package, installed for your user with `Add-AppxPackage`. It needs no administrator rights. |
+
+Not supported: **Linux**. Slack publishes its Linux client only as `.deb` and `.rpm` packages, with no AppImage or tarball that Quiver can unpack on every distribution, so this arrow does not support Linux.
 
 Every download is pinned to an official Slack build from Slack's own download servers and verified against its SHA-256 checksum. Slack publishes no checksums, so the digests were computed from the files at the time of writing.
 
 ### Good to know
 
-- **Slack keeps itself up to date on macOS and Windows.** Quiver installs the build pinned here; from then on Slack's own updater applies. On Linux there is no updater in this install: update through a newer release of this arrow.
-- **Linux is a rootless repackaging of the `.deb`.** Slack publishes Linux only as `.deb` and `.rpm` packages (no tarball, AppImage or Flatpak), so Quiver unpacks the package into its own folder without installing it. That skips the package's post-install steps, including the apt repository and the setuid sandbox helper: on distributions that restrict unprivileged user namespaces (such as Ubuntu 24.04 and later) Slack may refuse to start without `--no-sandbox`. Linux builds are also released a little behind macOS and Windows (4.52.171 versus 4.52.178 at the time of writing).
+- **Slack keeps itself up to date.** Quiver installs the build pinned here; from then on Slack's own updater applies.
 - **On Windows x64, Slack installs into `%LOCALAPPDATA%\slack`**, not into Quiver's folder. Uninstalling through Quiver runs Slack's own uninstaller. Your sign-in and data are kept by Slack in your profile.
 - **On Windows ARM64, Slack is a packaged (MSIX) app.** Windows must allow installing apps outside the Microsoft Store (the default on current Windows 11). Uninstalling through Quiver removes the package. Do not install both this and the Microsoft Store version.
 - **Already have Slack?** Quiver never replaces an app it did not install. If `Slack.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
@@ -58,43 +58,11 @@ metadata:
     - team
     - desktop
 
-# Slack 4.52.178 (macOS, Windows) and 4.52.171 (Linux), the versioned URLs
+# Slack 4.52.178, the versioned URLs
 # served by slack.com/api/desktop.latestRelease. Slack publishes no checksums,
 # so every SHA-256 below was computed from the downloaded file. Slack
 # publishes no hardware minimums; requirements are conservative estimates.
 targets:
-  # Slack ships Linux only as .deb/.rpm (x86_64 only). Quiver cannot unpack a
-  # .deb, so a `run` step does it rootlessly into the workdir (dpkg-deb, else
-  # ar + tar), which needs an `uninstall`.
-  linux/amd64:
-    requirements:
-      cpu_cores: 2
-      ram_gb: 4
-      disk_gb: 2
-    lifecycle:
-      install:
-        - type: fetch
-          title: Download Slack
-          url: https://downloads.slack-edge.com/desktop-releases/linux/x64/4.52.171/slack-desktop-4.52.171-amd64.deb
-          checksum: c6199816e6d842289869a9e84a05042af6e0de68959df7a15e7273873b86dc36
-          to: ${INSTALL_PATH}/.slack.deb
-          timeout: 10m
-        - type: run
-          title: Unpack Slack
-          command: 'mkdir -p app && (dpkg-deb -x .slack.deb app || (cd app && ar x ../.slack.deb data.tar.xz && tar -xf data.tar.xz && rm -f data.tar.xz))'
-          timeout: 5m
-      uninstall:
-        - type: run
-          title: Remove Slack
-          command: 'rm -rf app .slack.deb'
-          timeout: 2m
-          exit_on_failure: false
-    expose:
-      desktop:
-        - name: Slack
-          path: ${INSTALL_PATH}/app/usr/lib/slack/slack
-          icon: ${INSTALL_PATH}/app/usr/share/pixmaps/slack.png
-          categories: [Network, InstantMessaging]
 
   # One universal (x86_64 + arm64) DMG.
   "darwin/*":
