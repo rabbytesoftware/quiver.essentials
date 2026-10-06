@@ -105,6 +105,14 @@ targets:
           title: Unpack the Codex desktop app
           command: 'mkdir -p desktop && if command -v dpkg-deb >/dev/null 2>&1; then dpkg-deb -x .codex-app.deb desktop; else ar p .codex-app.deb data.tar.xz | tar -xJ -C desktop; fi && rm -f .codex-app.deb'
           timeout: 10m
+        # The deb ships no icon, and a desktop entry's icon must be a local
+        # file, so the arrow's own icon is downloaded next to the app.
+        - type: fetch
+          title: Download the Codex icon
+          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/essentials-test/media/codex/icon.png
+          checksum: f0b4379f8c96426f50f06481e197007e9171a8e1ec498d2f5b8a8a50a8a1964c
+          to: ${INSTALL_PATH}/desktop/codex-icon.png
+          timeout: 2m
       uninstall:
         - type: run
           title: Remove the Codex desktop app
@@ -118,7 +126,7 @@ targets:
       desktop:
         - name: ChatGPT
           path: ${INSTALL_PATH}/desktop/usr/lib/chatgpt/ChatGPT
-          icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/codex/icon.png
+          icon: ${INSTALL_PATH}/desktop/codex-icon.png
           categories: [Utility, Development]
 
   # Apple silicon: CLI plus the desktop app (ChatGPT.app, macOS 13 or later).
