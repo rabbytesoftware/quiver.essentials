@@ -33,7 +33,7 @@ Every download is pinned to an official Slack build from Slack's own download se
 
 ## License and trademarks
 
-Slack is proprietary software by Slack Technologies, LLC, a Salesforce company, free to download and used under Slack's [terms of service](https://slack.com/terms-of-service). This arrow only downloads Slack's official builds from Slack's own servers. The Slack name and logo are trademarks of Slack Technologies, LLC; the icon is the Slack logo as published on slack.com, the banner is the hero image from the slack.com homepage cropped to 2:1, and the screenshot comes from Slack's [download page](https://slack.com/downloads/mac).
+Slack is proprietary software by Slack Technologies, LLC, a Salesforce company, free to download and used under Slack's [terms of service](https://slack.com/terms-of-service). This arrow only downloads Slack's official builds from Slack's own servers. The Slack name and logo are trademarks of Slack Technologies, LLC; the icon is the Slack logo as published on slack.com, the banner combines the Slack lockup (from its unfurl image on slack.com) with the app-window hero image from the slack.com homepage, and the screenshot comes from Slack's [download page](https://slack.com/downloads/mac).
 
 ```arrow
 schema: "arrow@v0"
@@ -52,7 +52,7 @@ metadata:
       url: https://slack.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/slack/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/slack/banner.jpg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/slack/banner.png
   tags:
     - chat
     - team

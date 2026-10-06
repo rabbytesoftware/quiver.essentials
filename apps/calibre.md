@@ -39,7 +39,7 @@ Every download is pinned to calibre 9.15.0 from the [official GitHub releases](h
 
 ## License and trademarks
 
-calibre is free software by Kovid Goyal and contributors, released under the [GNU General Public License, version 3](https://github.com/kovidgoyal/calibre/blob/master/LICENSE). This arrow only downloads calibre's official builds from its GitHub releases. The calibre name and logo belong to its author; the icon is calibre's own logo (`resources/images/calibre.svg`), the banner is a cropped calibre screenshot from its [Flathub listing](https://flathub.org/apps/com.calibre_ebook.calibre) (calibre 1.22, the largest official image available), and the screenshots come from calibre's [user manual](https://manual.calibre-ebook.com/), whose conversion and editor images show older versions of the interface.
+calibre is free software by Kovid Goyal and contributors, released under the [GNU General Public License, version 3](https://github.com/kovidgoyal/calibre/blob/master/LICENSE). This arrow only downloads calibre's official builds from its GitHub releases. The calibre name and logo belong to its author; the icon is calibre's own logo (`resources/images/calibre.svg`), the banner combines the logo, unmodified, with a screenshot from calibre's [Flathub listing](https://flathub.org/apps/com.calibre_ebook.calibre) (calibre 1.22, the newest official full-window image), and the screenshots come from calibre's [user manual](https://manual.calibre-ebook.com/), whose conversion and editor images show older versions of the interface.
 
 ```arrow
 schema: "arrow@v0"
@@ -58,7 +58,7 @@ metadata:
       url: https://calibre-ebook.com
   media:
     icon: https://raw.githubusercontent.com/kovidgoyal/calibre/v9.15.0/resources/images/calibre.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/calibre/banner.png
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/calibre/banner.svg
   tags:
     - ebooks
     - conversion

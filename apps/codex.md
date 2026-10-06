@@ -32,7 +32,7 @@ Every download is pinned to an official OpenAI build (Codex CLI 0.160.1; desktop
 
 ## License and trademarks
 
-Codex CLI is open source software released by OpenAI under the [Apache License 2.0](https://github.com/openai/codex/blob/main/LICENSE). The desktop app is proprietary software by OpenAI, used under OpenAI's [terms](https://openai.com/policies/). This arrow only downloads OpenAI's official builds from OpenAI's servers and GitHub releases. OpenAI, ChatGPT and Codex are trademarks of OpenAI; the icon is the Codex app icon shipped inside OpenAI's own macOS build, unmodified, the banner is the "Codex CLI" social-preview image OpenAI publishes for its Codex documentation, cropped to 2:1 without scaling, and the screenshot comes from the official [openai/codex repository](https://github.com/openai/codex).
+Codex CLI is open source software released by OpenAI under the [Apache License 2.0](https://github.com/openai/codex/blob/main/LICENSE). The desktop app is proprietary software by OpenAI, used under OpenAI's [terms](https://openai.com/policies/). This arrow only downloads OpenAI's official builds from OpenAI's servers and GitHub releases. OpenAI, ChatGPT and Codex are trademarks of OpenAI; the icon is the Codex app icon shipped inside OpenAI's own macOS build, unmodified, the banner is composed from that icon (unaltered), the abstract Codex artwork from [developers.openai.com/codex](https://developers.openai.com/codex) and the official terminal capture from the openai/codex repository, with the product name set in text, and the screenshot comes from the official [openai/codex repository](https://github.com/openai/codex).
 
 ```arrow
 schema: "arrow@v0"

@@ -34,7 +34,7 @@ The download is pinned to WinRAR 7.23, the current release on [rarlab.com](https
 
 ## License and trademarks
 
-WinRAR is proprietary software by Alexander L. Roshal, distributed by win.rar GmbH under the [end user license agreement](https://www.rarlab.com/license.htm) included in the installer. This arrow only downloads WinRAR's official installer from rarlab.com and does not modify it. The WinRAR name and logo belong to win.rar GmbH; the icon is the application icon stored in WinRAR's own `WinRAR.exe`, extracted unmodified, the banner is the official WinRAR image from win-rar.com (`winrar-gui.png`, cropped to 2:1), and the screenshots come from RARLAB's [WinRAR product page](https://www.win-rar.com/products-winrar.html) (they show an earlier release with the same layout).
+WinRAR is proprietary software by Alexander L. Roshal, distributed by win.rar GmbH under the [end user license agreement](https://www.rarlab.com/license.htm) included in the installer. This arrow only downloads WinRAR's official installer from rarlab.com and does not modify it. The WinRAR name and logo belong to win.rar GmbH; the icon is the application icon stored in WinRAR's own `WinRAR.exe`, extracted unmodified, the banner was designed for this arrow around that icon with the product name set beside it, and the screenshots come from RARLAB's [WinRAR product page](https://www.win-rar.com/products-winrar.html) (they show an earlier release with the same layout).
 
 ```arrow
 schema: "arrow@v0"

@@ -35,7 +35,7 @@ Click the game once so it has keyboard focus, then play with the original DOOM k
 |---|---|
 | macOS, Linux and Windows (x64 and ARM64) | A pinned build of the DOOM WebAssembly module and its web page. Quiver serves them to its own window while the arrow runs. |
 
-Both files are pinned to release `v0.1.0` of [jacobenget/doom.wasm](https://github.com/jacobenget/doom.wasm) and verified against their SHA-256 checksums.
+The game module is pinned to release `v0.1.0` of [jacobenget/doom.wasm](https://github.com/jacobenget/doom.wasm). The page is that project's own browser example with small changes to fit the window and keep keyboard focus, kept in this repository. Both files are verified against their SHA-256 checksums.
 
 ### Good to know
 
@@ -44,11 +44,11 @@ Both files are pinned to release `v0.1.0` of [jacobenget/doom.wasm](https://gith
 - **No sound or music, no mouse, no saved games.** Upstream has not implemented them yet. You play with the keyboard, and progress is lost when you stop.
 - **The screen-melt transition freezes** for a moment while it plays in the browser, a limitation upstream documents.
 - **Nothing is written outside Quiver's folder**, so removing the arrow removes everything.
-- **Needs Quiver's desktop app.** The interface is shown by the desktop shell; there is no command-line way to play.
+- **Needs Quiver's desktop app**, in a version whose arrow-app security policy allows WebAssembly. The interface is shown by the desktop shell; there is no command-line way to play.
 
 ## License and trademarks
 
-The DOOM engine source is released by id Software under the GNU General Public License, version 2, and this WebAssembly build is published by jacobenget under the same license, derived from [doomgeneric](https://github.com/ozkl/doomgeneric), fbDoom, Frosted Doom and Chocolate Doom. The shareware game data is copyrighted by id Software and freely redistributable in unmodified form. DOOM is a trademark of id Software LLC. The banner is a crop of the original DOOM cover painting, as published by Bethesda in the Steam store listing for DOOM + DOOM II; the icon (the status-bar face) is the game's own graphic, enlarged on a plain background; and the screenshots were taken from this build.
+The DOOM engine source is released by id Software under the GNU General Public License, version 2, and this WebAssembly build is published by jacobenget under the same license, derived from [doomgeneric](https://github.com/ozkl/doomgeneric), fbDoom, Frosted Doom and Chocolate Doom. The shareware game data is copyrighted by id Software and freely redistributable in unmodified form. DOOM is a trademark of id Software LLC. The banner combines the original DOOM cover painting and the DOOM logo, both as published by Bethesda in the Steam store listing for DOOM + DOOM II; the icon (the status-bar face) is the game's own graphic, enlarged on a plain background; and the screenshots were taken from this build.
 
 ```arrow
 schema: "arrow@v0"
@@ -69,7 +69,7 @@ metadata:
       url: https://github.com/jacobenget/doom.wasm
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/doom/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/doom/banner.jpg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/doom/banner.png
   tags:
     - game
     - fps
@@ -78,9 +78,12 @@ metadata:
 # One portable target: the game is a WebAssembly module that the Quiver shell
 # renders, so it is the same on every OS and CPU. Both downloads come from
 # jacobenget/doom.wasm at tag v0.1.0 (commit 24bb772): the release's
-# doom-v0.1.0.wasm (it embeds the shareware doom1.wad) and the project's own
-# example page examples/browser/doom.html, which loads assets/doom.wasm and
-# becomes the served index.html. Nothing is built or written outside the
+# doom-v0.1.0.wasm (it embeds the shareware doom1.wad), and the page, which is
+# the project's examples/browser/doom.html with small Quiver changes (window
+# fitting and keyboard focus; see apps-assets/doom/index.html). The page loads
+# assets/doom.wasm by a relative path and becomes the served index.html. It is
+# fetched from this repository's master by raw URL, so its checksum must be
+# updated whenever that file changes (pin the URL to a commit once merged). Nothing is built or written outside the
 # workdir; `uninstall` only undoes the mkdir. Requirements are estimates: upstream
 # states about 16 MB of module memory.
 targets:
@@ -100,8 +103,8 @@ targets:
           timeout: 1m
         - type: fetch
           title: Download the DOOM page
-          url: https://raw.githubusercontent.com/jacobenget/doom.wasm/v0.1.0/examples/browser/doom.html
-          checksum: 4ac46540ea67b652b66166b1617cb617f68cabcb95b2248ef4d19a0f646455f5
+          url: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/apps-assets/doom/index.html
+          checksum: 41a4cdfa48d62c68cff5bf1e1d9c1dea5a21d7b48a4fcc50aabc45c1ca981ff2
           to: ${INSTALL_PATH}/ui/index.html
           timeout: 2m
         - type: fetch
