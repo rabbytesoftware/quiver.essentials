@@ -1,5 +1,7 @@
 7-Zip is a free file archiver with a high compression ratio. It packs and unpacks its own 7z format as well as ZIP, TAR, GZIP, BZIP2, XZ and WIM, and opens a long list of other archive and disk-image formats, including RAR (unpack only), ISO, CAB and DMG. It is written by Igor Pavlov and works on personal and commercial computers alike, without registration or payment.
 
+![7-Zip File Manager on Windows](https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/7zip/screenshots/file-manager.png)
+
 ## Features
 
 - **Strong compression**: the 7z format with LZMA and LZMA2 compression, plus ZIP, TAR, GZIP, BZIP2, XZ and WIM for packing.
@@ -37,7 +39,7 @@ Run `quiver path setup` once so your shell finds `~/.quiver/bin` (Linux and macO
 
 ## License and trademarks
 
-7-Zip is free software by Igor Pavlov, under the GNU LGPL (version 2.1 or later) with parts of `7z.dll` under the BSD licenses and parts under the LGPL with the "unRAR license restriction"; see its [license terms](https://www.7-zip.org/license.txt). This arrow only downloads 7-Zip's official builds from 7-zip.org. The icon is 7-Zip's File Manager icon from its [source repository](https://github.com/ip7z/7zip), unmodified and placed in a square SVG, and the banner was designed for this arrow around that same icon (enlarged by a whole-number factor, pixel for pixel) with the product name set beside it.
+7-Zip is free software by Igor Pavlov, under the GNU LGPL (version 2.1 or later) with parts of `7z.dll` under the BSD licenses and parts under the LGPL with the "unRAR license restriction"; see its [license terms](https://www.7-zip.org/license.txt). This arrow only downloads 7-Zip's official builds from 7-zip.org. The icon is 7-Zip's File Manager icon from its [source repository](https://github.com/ip7z/7zip), unmodified and placed in a square SVG, and the banner was designed for this arrow around that same icon (enlarged by a whole-number factor, pixel for pixel) with the product name set beside it. The screenshot is the 7-Zip File Manager, captured on Windows 11 while testing this arrow.
 
 ```arrow
 schema: "arrow@v0"
