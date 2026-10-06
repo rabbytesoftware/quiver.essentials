@@ -24,8 +24,8 @@ Not supported: **Linux**. Spotify publishes its Linux client only as a Debian pa
 
 ### Good to know
 
-- **Spotify keeps itself up to date.** Quiver installs the build pinned here; from then on Spotify's own updater installs new versions, as it does when installed by hand.
-- **The downloads are not versioned.** Spotify serves its installers from fixed addresses that it replaces in place with each release, which can be as often as weekly. The checksums here match the build current when the arrow was written (Spotify 1.3.3.264); when Spotify publishes a newer one the checksum no longer matches and the install fails until this arrow is updated. An install that fails with a checksum error is therefore expected, not a corrupted download.
+- **Spotify keeps itself up to date.** Quiver installs the current build; from then on Spotify's own updater installs new versions, as it does when installed by hand.
+- **The downloads are not versioned, so they are not checksum-verified.** Spotify serves its installers from fixed addresses that it replaces in place with each release, which can be as often as weekly, so Quiver cannot pin a checksum without the install breaking after the next release. Quiver therefore installs whatever Spotify currently publishes at those addresses, downloaded over HTTPS directly from Spotify, without a checksum check.
 - **On Windows, Spotify installs into your user profile** (`%APPDATA%\Spotify`), not into Quiver's folder, and runs without administrator rights. Uninstalling through Quiver runs Spotify's own uninstaller.
 - **On macOS your data stays outside the app** (`~/Library/Application Support/Spotify` and its caches), so removing the arrow does not delete your cache or downloaded music.
 - **Already have Spotify?** Quiver never replaces an app it did not install. If `Spotify.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
@@ -60,11 +60,11 @@ metadata:
 
 # Spotify 1.3.3.264 (g-hash daf3b824 on Windows), released 2026-10-01.
 # LIMITATION: Spotify offers no versioned URLs. Every download below is a
-# rolling "latest" address that Spotify overwrites on each release, so the
-# checksums are snapshots of the current files and will stop matching soon
-# after the next release; bump them (the Windows ones are also in winget's
-# Spotify.Spotify manifest) when that happens. Spotify updates itself after
-# install on every platform. Requirements are conservative estimates, since
+# rolling "latest" address that Spotify overwrites on each release, so no
+# checksum can be pinned: a pinned digest would stop matching after the next
+# release and break the install. The downloads are therefore unverified by
+# Quiver (they come over HTTPS straight from Spotify's CDN). Spotify updates
+# itself after install on every platform. Requirements are conservative estimates, since
 # Spotify publishes no hardware minimums.
 #
 # Linux is deliberately absent: Spotify ships Linux only as a .deb (apt),
@@ -83,9 +83,6 @@ targets:
           url:
             darwin/arm64: https://download.scdn.co/SpotifyARM64.dmg
             darwin/amd64: https://download.scdn.co/Spotify.dmg
-          checksum:
-            darwin/arm64: 57947b58c3282186379eef81382deea0efecc4e3eb76ce813ea9b4537bc159a3
-            darwin/amd64: 5fba756f5cbbd4a297818b87a47c46486ce32747841da39e19089354f754bc10
           to: ${INSTALL_PATH}/.spotify.download
           timeout: 20m
         - type: portable
@@ -116,9 +113,6 @@ targets:
           url:
             windows/amd64: https://download.scdn.co/SpotifyFullSetupX64.exe
             windows/arm64: https://download.scdn.co/SpotifyFullSetupARM64.exe
-          checksum:
-            windows/amd64: 965b5194afee3609c0c9648d1e26d7d9d49bf7973106921e387a65930075fc8f
-            windows/arm64: 49cd8a15040f7723b0decb85344bff2ab907436f6eb220ac2732cbda29043c79
           to: ${INSTALL_PATH}/SpotifySetup.exe
           timeout: 20m
         - type: run
