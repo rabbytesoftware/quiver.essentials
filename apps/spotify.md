@@ -128,7 +128,7 @@ targets:
       uninstall:
         - type: run
           title: Uninstall Spotify
-          command: 'if exist "%APPDATA%\Spotify\Spotify.exe" "%APPDATA%\Spotify\Spotify.exe" /uninstall /silent'
+          command: 'if exist "%APPDATA%\Spotify\Spotify.exe" "%APPDATA%\Spotify\Spotify.exe" /uninstall /silent & del /f /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Spotify.lnk"'
           timeout: 5m
           exit_on_failure: false
 ```

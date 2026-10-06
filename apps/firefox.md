@@ -153,7 +153,7 @@ targets:
       uninstall:
         - type: run
           title: Uninstall Firefox
-          command: '.\Firefox\uninstall\helper.exe /S'
+          command: '.\Firefox\uninstall\helper.exe /S & del /f /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Firefox.lnk" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Firefox Private Browsing.lnk"'
           timeout: 5m
           exit_on_failure: false
 ```
