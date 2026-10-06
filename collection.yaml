@@ -67,3 +67,54 @@ arrows:
 
   - auid: docker
     path: apps/docker
+
+  - auid: vscode
+    path: apps/vscode
+
+  - auid: pumble
+    path: apps/pumble
+
+  - auid: calibre
+    path: apps/calibre
+
+  - auid: keepassxc
+    path: apps/keepassxc
+
+  - auid: google-chrome
+    path: apps/google-chrome
+
+  - auid: firefox
+    path: apps/firefox
+
+  - auid: slack
+    path: apps/slack
+
+  - auid: spotify
+    path: apps/spotify
+
+  - auid: vlc
+    path: apps/vlc
+
+  - auid: 7zip
+    path: apps/7zip
+
+  - auid: obsidian
+    path: apps/obsidian
+
+  - auid: blender
+    path: apps/blender
+
+  - auid: steam
+    path: apps/steam
+
+  - auid: claude
+    path: apps/claude
+
+  - auid: codex
+    path: apps/codex
+
+  - auid: winrar
+    path: apps/winrar
+
+  - auid: doom
+    path: apps/doom
