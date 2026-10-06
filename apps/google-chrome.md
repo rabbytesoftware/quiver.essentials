@@ -18,19 +18,20 @@ Google Chrome is Google's web browser. It signs in with a Google account to sync
 | Platform | What Quiver installs |
 |---|---|
 | macOS (Apple silicon and Intel) | Google's official universal DMG, as `Google Chrome.app` in Applications. Requires macOS 13 or later. |
-| Windows (x64 and ARM64) | Google's official offline installer, run for your user (no administrator rights). Chrome installs into your user profile and adds its own shortcuts. Requires Windows 10 or later. |
+| Windows (x64 and ARM64) | Google's official standalone installer for the current stable release, run for your user (no administrator rights). Chrome installs into your user profile and adds its own shortcuts. Requires Windows 10 or later. |
 
 Not supported: **Linux**. Google publishes Chrome for Linux only as `.deb` and `.rpm` packages, with no AppImage or tarball that Quiver can unpack on every distribution, so this arrow does not support Linux.
 
-Google publishes no fixed download link for Chrome, only "latest" links that change under you. Quiver therefore uses the versioned, content-addressed download URLs Google's own update service hands out (the ones Chrome itself updates from). Every file is pinned to Chrome 154 and verified against the SHA-256 checksum Google publishes for it in the update service's response.
+Quiver installs the current stable Chrome from Google's own "current" download addresses, so the install always fetches the latest release and can never point at a build Google has removed. These downloads are fetched over HTTPS from Google and are **not checksum-verified**: Google publishes no checksum for a file that changes with every release.
 
 This is Google Chrome itself, not Chrome for Testing: that is a separate build meant for test automation, with no auto-update and a different name and profile.
 
 ### Good to know
 
-- **On macOS and Windows, Chrome keeps itself up to date.** Quiver installs the release pinned here; from then on Chrome's own updater installs new versions. Chrome may therefore be newer than the version in this arrow.
+- **On macOS and Windows, Chrome keeps itself up to date.** Quiver installs the current release at the time you install; from then on Chrome's own updater installs new versions.
 - **Your profile lives outside Quiver's folder** (`~/Library/Application Support/Google/Chrome` on macOS, `%LOCALAPPDATA%\Google\Chrome\User Data` on Windows), so uninstalling keeps your bookmarks and settings. Delete it to remove everything.
-- **On Windows, Chrome installs into your user profile**, not into Quiver's folder, together with Google's per-user updater. Uninstalling through Quiver runs Chrome's own uninstaller. The installer is about 500 MB; Quiver deletes it after installing.
+- **On Windows, Chrome installs into your user profile**, not into Quiver's folder, together with Google's per-user updater. Uninstalling through Quiver runs Chrome's own uninstaller. The installer is about 170 MB; Quiver deletes it after installing.
+- **Downloads are not checksum-verified.** They come over HTTPS from Google's servers, but they are "current" links, so no fixed checksum can be pinned.
 - **Already have Chrome?** Quiver never replaces an app it did not install. If `Google Chrome.app` is already in your Applications folder, Quiver leaves it untouched and reports that it could not place its own copy there.
 - **Using Chrome is subject to Google's terms.** Chrome is not open source and Quiver does not redistribute it: it downloads Google's files straight from Google's servers onto your machine.
 
@@ -60,12 +61,9 @@ metadata:
     - browser
     - desktop
 
-# Chrome 154. Google offers only rolling "latest" links, so the pins come from
-# its own metadata:
-#  - macOS and Windows: the response of Google's update service
-#    (update.googleapis.com/service/update2/json, Omaha protocol 3.1, stable
-#    channel), which names an immutable versioned URL under
-#    dl.google.com/release2/chrome/ and its SHA-256.
+# Google keeps no permanent versioned download URLs for Chrome, so the arrow
+# uses its stable "current" addresses and carries no `checksum` (Google
+# publishes none for a rolling file); the downloads are HTTPS from Google.
 #  - Linux is not supported: Google ships it only as .deb/.rpm.
 # Requirements are conservative estimates: Google publishes OS versions but
 # no hardware minimums.
@@ -81,8 +79,7 @@ targets:
       install:
         - type: fetch
           title: Download Chrome
-          url: https://dl.google.com/release2/chrome/oesfoc5zcpr4zxi27ozbzxre4i_154.0.8037.98/GoogleChrome-154.0.8037.98.dmg
-          checksum: 7f85cdec42632b482b2afc5fe8ee04bcf730082cec1328c0041d788632f57542
+          url: https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg
           to: ${INSTALL_PATH}/.chrome.download
           timeout: 30m
         - type: portable
@@ -95,10 +92,10 @@ targets:
         - name: Chrome
           path: auto
 
-  # Google's offline installer (the same file its updater runs), started without
-  # --system-level so it installs per user into %LOCALAPPDATA%\Google\Chrome,
+  # Google's standalone installer for the current stable release (the tag
+  # needsadmin=false makes it install per user into %LOCALAPPDATA%\Google\Chrome),
   # outside the workdir, and creates its own shortcuts: there is no `expose`.
-  # It is ~500 MB, so it is deleted once Chrome is installed. `uninstall` runs
+  # It is ~170 MB, so it is deleted once Chrome is installed. `uninstall` runs
   # the setup.exe Chrome registers for the user under the "Google Chrome"
   # uninstall key (it moves with Chrome's own updates); --force-uninstall skips
   # the confirmation dialog. Requires Windows 10 or later.
@@ -112,16 +109,13 @@ targets:
         - type: fetch
           title: Download the Chrome installer
           url:
-            windows/amd64: https://dl.google.com/release2/chrome/ac3stf7x6z62hvwmphhro6dpbhpq_154.0.8037.98/154.0.8037.98_chrome_installer_uncompressed.exe
-            windows/arm64: https://dl.google.com/release2/chrome/acywoj3yjdggwoxnkmqxkimevloq_154.0.8037.98/154.0.8037.98_chrome_installer_uncompressed.exe
-          checksum:
-            windows/amd64: 2d5f2073185cdf8e72bd70b19970bcb2e1ade19a85d68b6be2a3fe672816941d
-            windows/arm64: d3a01842d9d7bd56c5ea8323558df1f61b7b87018d0624dabf2ffdf32b2d7549
+            windows/amd64: https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B00000000-0000-0000-0000-000000000000%7D%26lang%3Den%26browser%3D4%26usagestats%3D0%26appname%3DGoogle%2520Chrome%26needsadmin%3Dfalse%26ap%3Dx64-stable-statsdef_1%26installdataindex%3Dempty/chrome/install/ChromeStandaloneSetup64.exe
+            windows/arm64: https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B00000000-0000-0000-0000-000000000000%7D%26lang%3Den%26browser%3D4%26usagestats%3D0%26appname%3DGoogle%2520Chrome%26needsadmin%3Dfalse%26ap%3Darm64-stable-statsdef_1%26installdataindex%3Dempty/chrome/install/ChromeStandaloneSetup64.exe
           to: ${INSTALL_PATH}/ChromeSetup.exe
           timeout: 40m
         - type: run
           title: Install Chrome
-          command: '.\ChromeSetup.exe --do-not-launch-chrome --channel=stable >nul 2>&1 <nul && del /q ChromeSetup.exe'
+          command: '.\ChromeSetup.exe /silent /install >nul 2>&1 <nul && del /q ChromeSetup.exe'
           timeout: 15m
       uninstall:
         - type: run
