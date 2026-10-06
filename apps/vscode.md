@@ -35,7 +35,7 @@ Every download is pinned to VS Code 1.140.0 and verified against the SHA-256 che
 
 ## License and trademarks
 
-Visual Studio Code is a product of Microsoft Corporation, distributed under the [Microsoft Software License Terms](https://code.visualstudio.com/license); the source code is available under the MIT license as [Code - OSS](https://github.com/microsoft/vscode). This arrow only downloads Microsoft's official builds from Microsoft's own servers. The Visual Studio Code name and logo are trademarks of Microsoft; the icon is the product icon from the [vscode repository](https://github.com/microsoft/vscode), the banner was generated from it, and the screenshots come from the [VS Code documentation](https://code.visualstudio.com/docs).
+Visual Studio Code is a product of Microsoft Corporation, distributed under the [Microsoft Software License Terms](https://code.visualstudio.com/license); the source code is available under the MIT license as [Code - OSS](https://github.com/microsoft/vscode). This arrow only downloads Microsoft's official builds from Microsoft's own servers. The Visual Studio Code name and logo are trademarks of Microsoft; the icon is the official icon from the [VS Code branding kit](https://code.visualstudio.com/brand), the banner is the hero image from code.visualstudio.com cropped to 2:1, and the screenshots come from the [VS Code documentation](https://code.visualstudio.com/docs).
 
 ```arrow
 schema: "arrow@v0"
@@ -53,8 +53,8 @@ metadata:
     - name: Microsoft
       url: https://code.visualstudio.com
   media:
-    icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/vscode/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/vscode/banner.svg
+    icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/vscode/icon.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/vscode/banner.png
   tags:
     - editor
     - ide

@@ -33,7 +33,7 @@ Not supported: **Linux**. Spotify publishes its Linux client only as a Debian pa
 
 ## License and trademarks
 
-Spotify is proprietary software by Spotify AB, free to use under its [Terms of Use](https://www.spotify.com/legal/end-user-agreement/). This arrow only downloads Spotify's official builds from Spotify's own servers. The Spotify name and logo are trademarks of Spotify AB; the icon is the logo from Spotify's [design guidelines](https://developer.spotify.com/documentation/design) (with its canvas padded to a square), the banner was generated from it, and the screenshots come from Spotify's official Microsoft Store listing.
+Spotify is proprietary software by Spotify AB, free to use under its [Terms of Use](https://www.spotify.com/legal/end-user-agreement/). This arrow only downloads Spotify's official builds from Spotify's own servers. The Spotify name and logo are trademarks of Spotify AB; the icon is the logo from Spotify's [design guidelines](https://developer.spotify.com/documentation/design) (with its canvas padded to a square), the banner is a promotional image from the same Microsoft Store listing, cropped to 2:1, and the screenshots come from Spotify's official Microsoft Store listing.
 
 ```arrow
 schema: "arrow@v0"
@@ -52,7 +52,7 @@ metadata:
       url: https://www.spotify.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/spotify/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/spotify/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/spotify/banner.jpg
   tags:
     - music
     - podcasts

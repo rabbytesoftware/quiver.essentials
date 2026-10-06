@@ -36,7 +36,7 @@ Every download is pinned to Pumble 1.4.71 from pumble.com and verified against i
 
 ## License and trademarks
 
-Pumble is proprietary software by CAKE.com, free to use under its [terms of service](https://pumble.com/terms-of-service). This arrow only downloads Pumble's official builds from pumble.com. The Pumble name and logo are trademarks of CAKE.com; the icon is Pumble's app icon from pumble.com, the banner was generated from it, and the screenshots come from [pumble.com](https://pumble.com).
+Pumble is proprietary software by CAKE.com, free to use under its [terms of service](https://pumble.com/terms-of-service). This arrow only downloads Pumble's official builds from pumble.com. The Pumble name and logo are trademarks of CAKE.com; the icon is Pumble's app icon and the banner is its social image, both as published on pumble.com, and the screenshots come from [pumble.com](https://pumble.com).
 
 ```arrow
 schema: "arrow@v0"
@@ -55,7 +55,7 @@ metadata:
       url: https://cake.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/pumble/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/pumble/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/pumble/banner.png
   tags:
     - chat
     - team

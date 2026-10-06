@@ -37,7 +37,7 @@ Every download is pinned to Firefox 157.0 on [archive.mozilla.org](https://archi
 
 ## License and trademarks
 
-Firefox is free software by Mozilla, released under the [Mozilla Public License 2.0](https://www.mozilla.org/MPL/2.0/). This arrow only downloads Mozilla's official builds from archive.mozilla.org. The Firefox name and logo are trademarks of the Mozilla Foundation, used under its [logo and trademark policy](https://www.mozilla.org/foundation/trademarks/policy/); the icon is the logo from Mozilla's [Firefox source repository](https://github.com/mozilla-firefox/firefox), the banner was generated from it, and the screenshots come from Mozilla's official Microsoft Store listing.
+Firefox is free software by Mozilla, released under the [Mozilla Public License 2.0](https://www.mozilla.org/MPL/2.0/). This arrow only downloads Mozilla's official builds from archive.mozilla.org. The Firefox name and logo are trademarks of the Mozilla Foundation, used under its [logo and trademark policy](https://www.mozilla.org/foundation/trademarks/policy/); the icon is the logo from Mozilla's [Firefox source repository](https://github.com/mozilla-firefox/firefox), the banner is the key art from firefox.com (cropped to 2:1), and the screenshots come from Mozilla's official Microsoft Store listing.
 
 ```arrow
 schema: "arrow@v0"
@@ -56,7 +56,7 @@ metadata:
       url: https://www.mozilla.org
   media:
     icon: https://raw.githubusercontent.com/mozilla-firefox/firefox/FIREFOX_157_0_RELEASE/browser/branding/official/content/about-logo.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/firefox/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/firefox/banner.png
   tags:
     - browser
     - privacy

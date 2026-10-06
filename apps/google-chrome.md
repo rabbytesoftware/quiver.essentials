@@ -38,7 +38,7 @@ This is Google Chrome itself, not Chrome for Testing: that is a separate build m
 
 ## License and trademarks
 
-Google Chrome is proprietary software by Google LLC, free to use under the [Google Chrome Terms of Service](https://www.google.com/chrome/terms/); it is built on the open-source Chromium project. This arrow only downloads Google's official builds from Google's own servers. The Google Chrome name and logo are trademarks of Google LLC; the icon is the logo published on [google.com/chrome](https://www.google.com/chrome/), the banner was generated from it, and the screenshots are Google's official images from that page.
+Google Chrome is proprietary software by Google LLC, free to use under the [Google Chrome Terms of Service](https://www.google.com/chrome/terms/); it is built on the open-source Chromium project. This arrow only downloads Google's official builds from Google's own servers. The Google Chrome name and logo are trademarks of Google LLC; the icon is the logo published on [google.com/chrome](https://www.google.com/chrome/), the banner and screenshots are Google's official images from that page (the banner is its homepage image, cropped to 2:1).
 
 ```arrow
 schema: "arrow@v0"
@@ -57,7 +57,7 @@ metadata:
       url: https://www.google.com/chrome/
   media:
     icon: https://www.google.com/chrome/static/images/chrome-logo-m100.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/google-chrome/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/google-chrome/banner.png
   tags:
     - browser
     - desktop

@@ -1,5 +1,7 @@
 WinRAR is an archive manager for Windows. It creates archives in the RAR and ZIP formats, opens and unpacks RAR, ZIP and many other archive types downloaded from the internet, and can shrink data for backups and email attachments. It comes with the command-line tools `Rar.exe` and `UnRAR.exe` as well. WinRAR is **shareware**: you can try it for free, and a license is needed to keep using it after the trial.
 
+![WinRAR's main window browsing a folder](https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/winrar/screenshots/main-window.png)
+
 ## Features
 
 - **RAR and ZIP archives**: create and extract both, and unpack many other formats such as 7z, TAR, GZ, BZ2, XZ, CAB and ISO.
@@ -8,6 +10,8 @@ WinRAR is an archive manager for Windows. It creates archives in the RAR and ZIP
 - **Self-extracting archives**: create archives that unpack without WinRAR installed.
 - **Command line**: `Rar.exe` and `UnRAR.exe` for scripts, plus the `WinRAR.exe` graphical interface.
 - **Explorer integration**: right-click menu entries to pack and unpack files.
+
+![WinRAR's archive name and parameters dialog](https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/winrar/screenshots/archive-options.png)
 
 ## Installing with Quiver
 
@@ -30,7 +34,7 @@ The download is pinned to WinRAR 7.23, the current release on [rarlab.com](https
 
 ## License and trademarks
 
-WinRAR is proprietary software by Alexander L. Roshal, distributed by win.rar GmbH under the [end user license agreement](https://www.rarlab.com/license.htm) included in the installer. This arrow only downloads WinRAR's official installer from rarlab.com and does not modify it. The WinRAR name and logo belong to win.rar GmbH; the icon is the application icon stored in WinRAR's own `WinRAR.exe`, extracted unmodified, and the banner was generated from it.
+WinRAR is proprietary software by Alexander L. Roshal, distributed by win.rar GmbH under the [end user license agreement](https://www.rarlab.com/license.htm) included in the installer. This arrow only downloads WinRAR's official installer from rarlab.com and does not modify it. The WinRAR name and logo belong to win.rar GmbH; the icon is the application icon stored in WinRAR's own `WinRAR.exe`, extracted unmodified, the banner is the official WinRAR image from win-rar.com (`winrar-gui.png`, cropped to 2:1), and the screenshots come from RARLAB's [WinRAR product page](https://www.win-rar.com/products-winrar.html) (they show an earlier release with the same layout).
 
 ```arrow
 schema: "arrow@v0"
@@ -49,7 +53,7 @@ metadata:
       url: https://www.win-rar.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/winrar/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/winrar/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/winrar/banner.png
   tags:
     - archiver
     - compression

@@ -30,7 +30,7 @@ Every download is pinned to an official Anthropic build (Claude Code 2.1.291, Cl
 
 ## License and trademarks
 
-Claude Code and the Claude desktop app are proprietary software by Anthropic PBC, used under Anthropic's [terms](https://www.anthropic.com/legal/consumer-terms) and [commercial terms](https://www.anthropic.com/legal/commercial-terms). This arrow only downloads Anthropic's official builds from Anthropic's own servers. Claude and the Claude logo are trademarks of Anthropic PBC; the icon is the app icon shipped inside Anthropic's own macOS build, unmodified, the banner was generated from it, and the screenshot is the demo recording in the official [claude-code repository](https://github.com/anthropics/claude-code).
+Claude Code and the Claude desktop app are proprietary software by Anthropic PBC, used under Anthropic's [terms](https://www.anthropic.com/legal/consumer-terms) and [commercial terms](https://www.anthropic.com/legal/commercial-terms). This arrow only downloads Anthropic's official builds from Anthropic's own servers. Claude and the Claude logo are trademarks of Anthropic PBC; the icon is the app icon shipped inside Anthropic's own macOS build, unmodified, the banner is the social-preview image Anthropic publishes for Claude on [anthropic.com/claude](https://www.anthropic.com/claude), cropped to 2:1 without scaling, and the screenshot is the demo recording in the official [claude-code repository](https://github.com/anthropics/claude-code).
 
 ```arrow
 schema: "arrow@v0"
@@ -49,7 +49,7 @@ metadata:
       url: https://www.anthropic.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/claude/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/claude/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/claude/banner.jpg
   tags:
     - ai
     - cli

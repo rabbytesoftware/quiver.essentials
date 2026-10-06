@@ -37,7 +37,7 @@ Run `quiver path setup` once so your shell finds `~/.quiver/bin` (Linux and macO
 
 ## License and trademarks
 
-7-Zip is free software by Igor Pavlov, under the GNU LGPL (version 2.1 or later) with parts of `7z.dll` under the BSD licenses and parts under the LGPL with the "unRAR license restriction"; see its [license terms](https://www.7-zip.org/license.txt). This arrow only downloads 7-Zip's official builds from 7-zip.org. The icon is 7-Zip's File Manager icon from its [source repository](https://github.com/ip7z/7zip), unmodified and placed in a square SVG, and the banner was generated from it.
+7-Zip is free software by Igor Pavlov, under the GNU LGPL (version 2.1 or later) with parts of `7z.dll` under the BSD licenses and parts under the LGPL with the "unRAR license restriction"; see its [license terms](https://www.7-zip.org/license.txt). This arrow only downloads 7-Zip's official builds from 7-zip.org. The icon is 7-Zip's File Manager icon from its [source repository](https://github.com/ip7z/7zip), unmodified and placed in a square SVG, and the banner is the social preview image GitHub generates for the official [ip7z/7zip](https://github.com/ip7z/7zip) repository (7-Zip publishes no other banner art).
 
 ```arrow
 schema: "arrow@v0"
@@ -56,7 +56,7 @@ metadata:
       url: https://www.7-zip.org
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/7zip/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/7zip/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/7zip/banner.png
   tags:
     - archiver
     - compression

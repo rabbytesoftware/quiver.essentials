@@ -38,7 +38,7 @@ Every download is pinned to KeePassXC 2.7.12 and verified against its SHA-256 ch
 
 ## License and trademarks
 
-KeePassXC is free software by the KeePassXC Team, licensed under the GNU General Public License version 2 or version 3 (see its [repository](https://github.com/keepassxreboot/keepassxc)). This arrow only downloads KeePassXC's official builds from its GitHub releases. The KeePassXC name and logo belong to the KeePassXC Team; the icon is the project's own, the banner was generated from it, and the screenshots come from [keepassxc.org](https://keepassxc.org/screenshots/) (taken on Windows; the interface is the same on every platform).
+KeePassXC is free software by the KeePassXC Team, licensed under the GNU General Public License version 2 or version 3 (see its [repository](https://github.com/keepassxreboot/keepassxc)). This arrow only downloads KeePassXC's official builds from its GitHub releases. The KeePassXC name and logo belong to the KeePassXC Team; the icon is the project's own, the banner is KeePassXC's own social-share image from keepassxc.org, cropped to 2:1, and the screenshots come from [keepassxc.org](https://keepassxc.org/screenshots/) (taken on Windows; the interface is the same on every platform).
 
 ```arrow
 schema: "arrow@v0"
@@ -57,7 +57,7 @@ metadata:
       url: https://keepassxc.org
   media:
     icon: https://raw.githubusercontent.com/keepassxreboot/keepassxc/2.7.12/share/icons/application/scalable/apps/keepassxc.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/keepassxc/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/keepassxc/banner.png
   tags:
     - password-manager
     - security

@@ -36,7 +36,7 @@ Every download is pinned to Obsidian 1.14.4 from the [official GitHub releases](
 
 ## License and trademarks
 
-Obsidian is proprietary software by the Obsidian team, free to use, including at work; organizations can optionally support it with a [commercial license](https://obsidian.md/pricing). This arrow only downloads Obsidian's official builds from its GitHub releases. The Obsidian name and logo belong to Obsidian; the icon is the logo from [obsidian.md](https://obsidian.md/brand), unmodified, the banner was generated from it, and the screenshots come from Obsidian's [help documentation](https://obsidian.md/help/).
+Obsidian is proprietary software by the Obsidian team, free to use, including at work; organizations can optionally support it with a [commercial license](https://obsidian.md/pricing). This arrow only downloads Obsidian's official builds from its GitHub releases. The Obsidian name and logo belong to Obsidian; the icon is the logo from [obsidian.md](https://obsidian.md/brand) and the banner is Obsidian's own social-share image from [obsidian.md](https://obsidian.md), cropped to 2:1, and the screenshots come from Obsidian's [help documentation](https://obsidian.md/help/).
 
 ```arrow
 schema: "arrow@v0"
@@ -55,7 +55,7 @@ metadata:
       url: https://obsidian.md
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/obsidian/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/obsidian/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/obsidian/banner.png
   tags:
     - notes
     - markdown

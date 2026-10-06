@@ -48,7 +48,7 @@ Both files are pinned to release `v0.1.0` of [jacobenget/doom.wasm](https://gith
 
 ## License and trademarks
 
-The DOOM engine source is released by id Software under the GNU General Public License, version 2, and this WebAssembly build is published by jacobenget under the same license, derived from [doomgeneric](https://github.com/ozkl/doomgeneric), fbDoom, Frosted Doom and Chocolate Doom. The shareware game data is copyrighted by id Software and freely redistributable in unmodified form. DOOM is a trademark of id Software LLC. The icon and banner are unmodified crops of the game's own title screen, and the screenshots were taken from this build.
+The DOOM engine source is released by id Software under the GNU General Public License, version 2, and this WebAssembly build is published by jacobenget under the same license, derived from [doomgeneric](https://github.com/ozkl/doomgeneric), fbDoom, Frosted Doom and Chocolate Doom. The shareware game data is copyrighted by id Software and freely redistributable in unmodified form. DOOM is a trademark of id Software LLC. The banner is a crop of the original DOOM cover painting, as published by Bethesda in the Steam store listing for DOOM + DOOM II; the icon (the status-bar face) is the game's own graphic, enlarged on a plain background; and the screenshots were taken from this build.
 
 ```arrow
 schema: "arrow@v0"
@@ -69,7 +69,7 @@ metadata:
       url: https://github.com/jacobenget/doom.wasm
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/doom/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/doom/banner.png
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/doom/banner.jpg
   tags:
     - game
     - fps

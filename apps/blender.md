@@ -33,7 +33,7 @@ Run `quiver path setup` once so your shell finds `~/.quiver/bin` (Linux and macO
 
 ## License and trademarks
 
-Blender is free software released under the [GNU General Public License](https://www.blender.org/about/license/) (version 2 or later for its source code; version 3 or later for binary distributions), by the Blender Foundation and contributors. This arrow only downloads Blender's official builds from download.blender.org. The Blender name and logo are trademarks of the Blender Foundation; the icon is Blender's app icon from its [source repository](https://projects.blender.org/blender/blender) (mirrored at [github.com/blender/blender](https://github.com/blender/blender)), the banner was generated from it, and the screenshot comes from the official [Blender 5.2 LTS manual](https://docs.blender.org/manual/en/5.2/interface/window_system/introduction.html) (licensed CC BY-SA 4.0 by the Blender Documentation Team). The screenshot shows a 5.0 pre-release build, with the same layout.
+Blender is free software released under the [GNU General Public License](https://www.blender.org/about/license/) (version 2 or later for its source code; version 3 or later for binary distributions), by the Blender Foundation and contributors. This arrow only downloads Blender's official builds from download.blender.org. The Blender name and logo are trademarks of the Blender Foundation; the icon is Blender's app icon from its [source repository](https://projects.blender.org/blender/blender) (mirrored at [github.com/blender/blender](https://github.com/blender/blender)), the banner is the official Blender 5.2 splash artwork ("Panthera" by Joanna Kobierska) from [blender.org](https://www.blender.org/download/releases/5-2/), and the screenshot comes from the official [Blender 5.2 LTS manual](https://docs.blender.org/manual/en/5.2/interface/window_system/introduction.html) (licensed CC BY-SA 4.0 by the Blender Documentation Team). The screenshot shows a 5.0 pre-release build, with the same layout.
 
 ```arrow
 schema: "arrow@v0"
@@ -52,7 +52,7 @@ metadata:
       url: https://www.blender.org
   media:
     icon: https://raw.githubusercontent.com/blender/blender/v5.2.2/release/freedesktop/icons/scalable/apps/blender.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/blender/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/blender/banner.jpg
   tags:
     - 3d
     - animation

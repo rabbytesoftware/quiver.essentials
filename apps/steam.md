@@ -36,7 +36,7 @@ The Linux package and both installers are pinned to Valve's builds and verified 
 
 ## License and trademarks
 
-Steam is proprietary software by Valve Corporation, used under the [Steam Subscriber Agreement](https://store.steampowered.com/subscriber_agreement/); the launcher's own scripts are Valve's too. This arrow only downloads Valve's official builds from Valve's servers. The Steam name and logo are trademarks of Valve Corporation; the icon is Valve's own Steam share image, unmodified, and the banner was generated from it.
+Steam is proprietary software by Valve Corporation, used under the [Steam Subscriber Agreement](https://store.steampowered.com/subscriber_agreement/); the launcher's own scripts are Valve's too. This arrow only downloads Valve's official builds from Valve's servers. The Steam name and logo are trademarks of Valve Corporation; the icon is Valve's own Steam share image, unmodified, and the banner is Valve's own social image from the [Steam About page](https://store.steampowered.com/about/), cropped to 2:1.
 
 ```arrow
 schema: "arrow@v0"
@@ -55,7 +55,7 @@ metadata:
       url: https://www.valvesoftware.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/steam/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/steam/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/steam/banner.jpg
   tags:
     - games
     - store

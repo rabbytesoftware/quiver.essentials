@@ -33,7 +33,7 @@ Every download is pinned to VLC 3.0.24 on [get.videolan.org](https://get.videola
 
 ## License and trademarks
 
-VLC is free software by the VideoLAN project, released under the [GNU General Public License, version 2 or later](https://www.videolan.org/legal.html) (its libVLC engine under the LGPL). This arrow only downloads VideoLAN's official builds from get.videolan.org. The VLC name and cone logo belong to the VideoLAN non-profit organisation; the icon is VLC's app icon from its [source repository](https://code.videolan.org/videolan/vlc), the banner was generated from it, and the screenshots come from [videolan.org](https://www.videolan.org/vlc/screenshots.html).
+VLC is free software by the VideoLAN project, released under the [GNU General Public License, version 2 or later](https://www.videolan.org/legal.html) (its libVLC engine under the LGPL). This arrow only downloads VideoLAN's official builds from get.videolan.org. The VLC name and cone logo belong to the VideoLAN non-profit organisation; the icon is VLC's app icon from its [source repository](https://code.videolan.org/videolan/vlc), the banner is a VLC wallpaper from VideoLAN's [goodies page](https://www.videolan.org/goodies.html) (cropped to 2:1), and the screenshots come from [videolan.org](https://www.videolan.org/vlc/screenshots.html).
 
 ```arrow
 schema: "arrow@v0"
@@ -52,7 +52,7 @@ metadata:
       url: https://www.videolan.org
   media:
     icon: https://code.videolan.org/videolan/vlc/-/raw/3.0.24/extras/package/macosx/asset_sources/vlc_app_icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/vlc/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/vlc/banner.jpg
   tags:
     - media-player
     - video

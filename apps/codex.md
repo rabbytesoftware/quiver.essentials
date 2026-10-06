@@ -32,7 +32,7 @@ Every download is pinned to an official OpenAI build (Codex CLI 0.160.1; desktop
 
 ## License and trademarks
 
-Codex CLI is open source software released by OpenAI under the [Apache License 2.0](https://github.com/openai/codex/blob/main/LICENSE). The desktop app is proprietary software by OpenAI, used under OpenAI's [terms](https://openai.com/policies/). This arrow only downloads OpenAI's official builds from OpenAI's servers and GitHub releases. OpenAI, ChatGPT and Codex are trademarks of OpenAI; the icon is the Codex app icon shipped inside OpenAI's own macOS build, unmodified, the banner was generated from it, and the screenshot comes from the official [openai/codex repository](https://github.com/openai/codex).
+Codex CLI is open source software released by OpenAI under the [Apache License 2.0](https://github.com/openai/codex/blob/main/LICENSE). The desktop app is proprietary software by OpenAI, used under OpenAI's [terms](https://openai.com/policies/). This arrow only downloads OpenAI's official builds from OpenAI's servers and GitHub releases. OpenAI, ChatGPT and Codex are trademarks of OpenAI; the icon is the Codex app icon shipped inside OpenAI's own macOS build, unmodified, the banner is the "Codex CLI" social-preview image OpenAI publishes for its Codex documentation, cropped to 2:1 without scaling, and the screenshot comes from the official [openai/codex repository](https://github.com/openai/codex).
 
 ```arrow
 schema: "arrow@v0"
@@ -51,7 +51,7 @@ metadata:
       url: https://openai.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/codex/icon.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/codex/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/codex/banner.png
   tags:
     - ai
     - cli
