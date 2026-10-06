@@ -68,7 +68,7 @@ metadata:
 # Requirements are conservative estimates: 7-Zip publishes none.
 targets:
   # Official console build (7zz, plus the static 7zzs): a tar.xz whose files
-  # sit at the archive root, so it is unpacked into its own folder.
+  # sit at the archive root, so it is unpacked into its own folder. Quiver's built-in xz reader rejects this archive's filter chain, so the system `tar` (with xz support) unpacks it.
   "linux/*":
     requirements:
       cpu_cores: 1
@@ -86,11 +86,15 @@ targets:
             linux/arm64: 5b0ac3aa91c1e3499f011d6af69d7f6b4de3ef2f011d9e2ff44c58ebd04aa388
           to: ${INSTALL_PATH}/.7zip.download
           timeout: 10m
-        - type: extract
+        - type: run
           title: Unpack 7-Zip
-          from: ${INSTALL_PATH}/.7zip.download
-          to: ${INSTALL_PATH}/7-Zip
+          command: 'mkdir -p 7-Zip && tar -xf .7zip.download -C 7-Zip && rm -f .7zip.download'
           timeout: 5m
+      uninstall:
+        - type: run
+          title: Remove 7-Zip
+          command: 'rm -rf 7-Zip'
+          timeout: 2m
     expose:
       cli:
         - name: 7zz
@@ -112,11 +116,15 @@ targets:
           checksum: bee04358cbcbc7106273cee0e8d72916db2696c48067a3538c34d8cd6fd16578
           to: ${INSTALL_PATH}/.7zip.download
           timeout: 10m
-        - type: extract
+        - type: run
           title: Unpack 7-Zip
-          from: ${INSTALL_PATH}/.7zip.download
-          to: ${INSTALL_PATH}/7-Zip
+          command: 'mkdir -p 7-Zip && tar -xf .7zip.download -C 7-Zip && rm -f .7zip.download'
           timeout: 5m
+      uninstall:
+        - type: run
+          title: Remove 7-Zip
+          command: 'rm -rf 7-Zip'
+          timeout: 2m
     expose:
       cli:
         - name: 7zz
