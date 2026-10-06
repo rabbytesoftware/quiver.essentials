@@ -129,6 +129,8 @@ targets:
   # (into %LOCALAPPDATA%\Programs); the installer adds its own shortcuts, so
   # there is no `expose`. `uninstall` finds the uninstall command Pumble
   # registered under HKCU by display name, as the exact key name is unknown.
+  # The installer is run twice at most: on Windows 11 ARM64 (x64 emulation) its
+  # first run has crashed with an access violation and then succeeded.
   windows/amd64:
     requirements:
       cpu_cores: 2
@@ -144,7 +146,7 @@ targets:
           timeout: 15m
         - type: run
           title: Install Pumble
-          command: '.\PumbleSetup.exe /S /currentuser >nul 2>&1 <nul'
+          command: '.\PumbleSetup.exe /S /currentuser >nul 2>&1 <nul || .\PumbleSetup.exe /S /currentuser >nul 2>&1 <nul'
           timeout: 10m
       uninstall:
         - type: run
