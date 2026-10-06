@@ -117,7 +117,7 @@ targets:
           timeout: 20m
         - type: run
           title: Install Spotify
-          command: '.\SpotifySetup.exe /silent /skip-app-launch'
+          command: '.\SpotifySetup.exe /silent /skip-app-launch >nul 2>&1 <nul'
           timeout: 15m
       uninstall:
         - type: run

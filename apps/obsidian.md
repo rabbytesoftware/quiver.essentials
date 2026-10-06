@@ -142,7 +142,7 @@ targets:
           timeout: 30m
         - type: run
           title: Install Obsidian
-          command: '.\ObsidianSetup.exe /S /currentuser'
+          command: '.\ObsidianSetup.exe /S /currentuser >nul 2>&1 <nul'
           timeout: 15m
       uninstall:
         - type: run

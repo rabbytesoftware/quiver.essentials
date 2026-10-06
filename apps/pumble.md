@@ -144,7 +144,7 @@ targets:
           timeout: 15m
         - type: run
           title: Install Pumble
-          command: '.\PumbleSetup.exe /S /currentuser'
+          command: '.\PumbleSetup.exe /S /currentuser >nul 2>&1 <nul'
           timeout: 10m
       uninstall:
         - type: run

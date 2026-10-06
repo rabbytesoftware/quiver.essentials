@@ -148,7 +148,7 @@ targets:
           timeout: 15m
         - type: run
           title: Install Firefox
-          command: '.\FirefoxSetup.exe /S /InstallDirectoryPath="%CD%\Firefox" /MaintenanceService=false /DesktopShortcut=false /TaskbarShortcut=false /PreventRebootRequired=true && del /q FirefoxSetup.exe'
+          command: '.\FirefoxSetup.exe /S /InstallDirectoryPath="%CD%\Firefox" /MaintenanceService=false /DesktopShortcut=false /TaskbarShortcut=false /PreventRebootRequired=true >nul 2>&1 <nul && del /q FirefoxSetup.exe'
           timeout: 10m
       uninstall:
         - type: run

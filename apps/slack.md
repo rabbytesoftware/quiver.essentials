@@ -140,7 +140,7 @@ targets:
           timeout: 15m
         - type: run
           title: Install Slack
-          command: '.\SlackSetup.exe --silent'
+          command: '.\SlackSetup.exe --silent >nul 2>&1 <nul'
           timeout: 10m
       uninstall:
         - type: run

@@ -181,7 +181,7 @@ targets:
           timeout: 40m
         - type: run
           title: Install Chrome
-          command: '.\ChromeSetup.exe --do-not-launch-chrome --channel=stable && del /q ChromeSetup.exe'
+          command: '.\ChromeSetup.exe --do-not-launch-chrome --channel=stable >nul 2>&1 <nul && del /q ChromeSetup.exe'
           timeout: 15m
       uninstall:
         - type: run
