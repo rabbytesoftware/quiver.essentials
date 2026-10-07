@@ -19,11 +19,6 @@ arrows:
   - auid: appimage-runtime
     path: tools/appimage-runtime
 
-  # Flat form (no explicit auid): identity derives from path's last segment,
-  # same as before this feature — kept simple since qview has no reason to
-  # live anywhere but this repo's root.
-  - path: qview
-
   # Desktop apps, grouped under apps/; their media live in media/<auid>/.
   - auid: discord
     path: apps/discord
