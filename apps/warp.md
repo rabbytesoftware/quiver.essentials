@@ -31,7 +31,7 @@ Every download is pinned to one official Warp release and verified against its S
 
 ## License and trademarks
 
-Warp's client is open source: its UI framework is released under the [MIT License](https://github.com/warpdotdev/warp/blob/master/LICENSE-MIT) and the rest under the [GNU AGPL v3](https://github.com/warpdotdev/warp/blob/master/LICENSE-AGPL), by Denver Technologies, Inc. (Warp). This arrow only downloads Warp's official builds from Warp's own servers. The Warp name and logo are trademarks of Warp; the icon comes from Warp's [brand assets](https://github.com/warpdotdev/brand-assets), the banner was generated from it, and the screenshot comes from the [Warp repository](https://github.com/warpdotdev/warp).
+Warp's client is open source: its UI framework is released under the [MIT License](https://github.com/warpdotdev/warp/blob/master/LICENSE-MIT) and the rest under the [GNU AGPL v3](https://github.com/warpdotdev/warp/blob/master/LICENSE-AGPL), by Denver Technologies, Inc. (Warp). This arrow only downloads Warp's official builds from Warp's own servers. The Warp name and logo are trademarks of Warp; the icon comes from Warp's [brand assets](https://github.com/warpdotdev/brand-assets), the banner is Warp's own social image from [warp.dev](https://www.warp.dev/), cropped to 2:1, and the screenshot comes from the [Warp repository](https://github.com/warpdotdev/warp).
 
 ```arrow
 schema: "arrow@v0"
@@ -50,7 +50,7 @@ metadata:
       url: https://www.warp.dev
   media:
     icon: https://raw.githubusercontent.com/warpdotdev/brand-assets/22c8994a3efd8631638b96685d98acb445b0ca9b/Logos/Warp-App-Icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/warp/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/warp/banner.png
   tags:
     - terminal
     - developer-tools

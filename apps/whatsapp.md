@@ -29,7 +29,7 @@ WhatsApp for Mac brings your chats and calls to the desktop: message friends, fa
 
 ## License and trademarks
 
-WhatsApp is proprietary software by WhatsApp LLC (Meta), free to use under its [Terms of Service](https://www.whatsapp.com/legal/terms-of-service). This arrow only downloads WhatsApp's official build from WhatsApp's own servers. The WhatsApp name and logo are trademarks of WhatsApp LLC, used as published in Meta's [WhatsApp brand resources](https://about.meta.com/brand/resources/whatsapp/whatsapp-brand/); the banner was generated from that official logo, and the screenshots come from WhatsApp's official Microsoft Store listing (the Windows app shares the Mac app's design).
+WhatsApp is proprietary software by WhatsApp LLC (Meta), free to use under its [Terms of Service](https://www.whatsapp.com/legal/terms-of-service). This arrow only downloads WhatsApp's official build from WhatsApp's own servers. The WhatsApp name and logo are trademarks of WhatsApp LLC, used as published in Meta's [WhatsApp brand resources](https://about.meta.com/brand/resources/whatsapp/whatsapp-brand/); the banner is WhatsApp's own artwork from its [download page](https://www.whatsapp.com/download), cropped to 2:1, and the screenshots come from WhatsApp's official Microsoft Store listing (the Windows app shares the Mac app's design).
 
 ```arrow
 schema: "arrow@v0"
@@ -48,7 +48,7 @@ metadata:
       url: https://www.whatsapp.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/whatsapp/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/whatsapp/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/whatsapp/banner.png
   tags:
     - chat
     - messaging

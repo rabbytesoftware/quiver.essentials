@@ -33,7 +33,7 @@ The download is pinned to an official Git for Windows release and verified again
 
 ## License and trademarks
 
-Git is free software released under the [GNU General Public License v2](https://github.com/git/git/blob/master/COPYING); Git for Windows is maintained by the [Git for Windows project](https://gitforwindows.org) under the same license. This arrow only downloads the official portable build from Git for Windows' GitHub releases. The Git logo by Jason Long is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) and comes from [git-scm.com](https://git-scm.com/community/logos); the banner was generated from it, and the screenshots come from [gitforwindows.org](https://gitforwindows.org).
+Git is free software released under the [GNU General Public License v2](https://github.com/git/git/blob/master/COPYING); Git for Windows is maintained by the [Git for Windows project](https://gitforwindows.org) under the same license. This arrow only downloads the official portable build from Git for Windows' GitHub releases. The Git logo by Jason Long is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) and comes from [git-scm.com](https://git-scm.com/community/logos); the banner combines that logo lockup (`Git-Logo-1788C.svg`), unmodified, with a gitk screenshot, and the screenshots come from [gitforwindows.org](https://gitforwindows.org).
 
 ```arrow
 schema: "arrow@v0"

@@ -34,7 +34,7 @@ Every download is pinned to an official Figma build and verified against its SHA
 
 ## License and trademarks
 
-Figma is proprietary software by Figma, Inc., used under its [Terms of Service](https://www.figma.com/legal/tos/). This arrow only downloads Figma's official builds from Figma's own servers. The Figma name and logo are trademarks of Figma, Inc.; the icon is the full-colour Figma icon from its [brand guidelines](https://www.figma.com/using-the-figma-brand/), unmodified and placed on a square canvas, the banner was generated from it, and the screenshots come from Figma's [product page](https://www.figma.com/design/).
+Figma is proprietary software by Figma, Inc., used under its [Terms of Service](https://www.figma.com/legal/tos/). This arrow only downloads Figma's official builds from Figma's own servers. The Figma name and logo are trademarks of Figma, Inc.; the icon is the full-colour Figma icon from its [brand guidelines](https://www.figma.com/using-the-figma-brand/), unmodified and placed on a square canvas, the banner is the social-share image of Figma's [Figma Design page](https://www.figma.com/design/), cropped to 2:1, and the screenshots come from Figma's [product page](https://www.figma.com/design/).
 
 ```arrow
 schema: "arrow@v0"
@@ -53,7 +53,7 @@ metadata:
       url: https://www.figma.com
   media:
     icon: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/figma/icon.svg
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/figma/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/figma/banner.jpg
   tags:
     - design
     - prototyping

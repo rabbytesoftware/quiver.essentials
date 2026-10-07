@@ -35,7 +35,7 @@ Every download is pinned to an official ONLYOFFICE release from [its GitHub rele
 
 ## License and trademarks
 
-ONLYOFFICE Desktop Editors is free software by Ascensio System SIA, released under the [GNU AGPL v3](https://github.com/ONLYOFFICE/DesktopEditors/blob/master/LICENSE). This arrow only downloads ONLYOFFICE's official builds from its GitHub releases. The ONLYOFFICE name and logo are trademarks of Ascensio System SIA; the icon is the app icon from the [desktop-apps repository](https://github.com/ONLYOFFICE/desktop-apps), the banner was generated from it, and the screenshots come from ONLYOFFICE's official Microsoft Store listing (the Windows app shares the design of the other platforms).
+ONLYOFFICE Desktop Editors is free software by Ascensio System SIA, released under the [GNU AGPL v3](https://github.com/ONLYOFFICE/DesktopEditors/blob/master/LICENSE). This arrow only downloads ONLYOFFICE's official builds from its GitHub releases. The ONLYOFFICE name and logo are trademarks of Ascensio System SIA; the icon is the app icon from the [desktop-apps repository](https://github.com/ONLYOFFICE/desktop-apps), the banner combines ONLYOFFICE's official logo from [onlyoffice.com](https://www.onlyoffice.com) with the editor window image from its desktop editors page, and the screenshots come from ONLYOFFICE's official Microsoft Store listing (the Windows app shares the design of the other platforms).
 
 ```arrow
 schema: "arrow@v0"
@@ -54,7 +54,7 @@ metadata:
       url: https://www.onlyoffice.com
   media:
     icon: https://raw.githubusercontent.com/ONLYOFFICE/desktop-apps/v9.4.0.97/macos/ONLYOFFICE/Images.xcassets/AppIcon.appiconset/1024x1024.png
-    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/onlyoffice/banner.svg
+    banner: https://raw.githubusercontent.com/rabbytesoftware/quiver.essentials/master/media/onlyoffice/banner.png
   tags:
     - office
     - documents

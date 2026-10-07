@@ -32,7 +32,7 @@ Every download is pinned to an official GIMP release from [download.gimp.org](ht
 
 ## License and trademarks
 
-GIMP is free software released under the [GNU General Public License, version 3 or later](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/COPYING), by the GIMP team. This arrow only downloads GIMP's official builds from download.gimp.org. The GIMP name and the Wilber logo belong to the GIMP project; the icon is GIMP's logo from its [gimp-data repository](https://gitlab.gnome.org/GNOME/gimp-data), the banner was generated from it, and the screenshots come from GIMP's official Microsoft Store listing.
+GIMP is free software released under the [GNU General Public License, version 3 or later](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/COPYING), by the GIMP team. This arrow only downloads GIMP's official builds from download.gimp.org. The GIMP name and the Wilber logo belong to the GIMP project; the icon is GIMP's logo from its [gimp-data repository](https://gitlab.gnome.org/GNOME/gimp-data), the banner combines that logo, unmodified, with a GIMP 3 screenshot from the same Microsoft Store listing, and the screenshots come from GIMP's official Microsoft Store listing.
 
 ```arrow
 schema: "arrow@v0"

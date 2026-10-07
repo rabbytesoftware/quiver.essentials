@@ -19,12 +19,6 @@ arrows:
   - auid: appimage-runtime
     path: tools/appimage-runtime
 
-  # Flat form (no explicit auid): identity derives from path's last segment,
-  # same as before this feature — kept simple since qview has no reason to
-  # live anywhere but this repo's root. Depends on appimage-runtime above and
-  # exercises it end to end.
-  - path: qview
-
   # Desktop apps, grouped under apps/; their media live in media/<auid>/.
   - auid: discord
     path: apps/discord
@@ -67,3 +61,52 @@ arrows:
 
   - auid: docker
     path: apps/docker
+
+  - auid: vscode
+    path: apps/vscode
+
+  - auid: pumble
+    path: apps/pumble
+
+
+  - auid: keepassxc
+    path: apps/keepassxc
+
+  - auid: google-chrome
+    path: apps/google-chrome
+
+  - auid: firefox
+    path: apps/firefox
+
+  - auid: slack
+    path: apps/slack
+
+  - auid: spotify
+    path: apps/spotify
+
+  - auid: vlc
+    path: apps/vlc
+
+  - auid: 7zip
+    path: apps/7zip
+
+  - auid: obsidian
+    path: apps/obsidian
+
+  - auid: blender
+    path: apps/blender
+
+  - auid: steam
+    path: apps/steam
+
+  - auid: claude
+    path: apps/claude
+
+  - auid: codex
+    path: apps/codex
+
+  - auid: winrar
+    path: apps/winrar
+
+  - auid: doom
+    path: apps/doom
