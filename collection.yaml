@@ -6,6 +6,9 @@ metadata:
   url: "https://github.com/rabbytesoftware/quiver.essentials"
   maintainers:
     - "rabbytesoftware"
+  media:
+    icon: "https://raw.githubusercontent.com/rabbytesoftware/quiver.core/334be6832a347f2cc00b8ca2f1ac970bb92e3f30/docs/quiver-icon.svg"
+    banner: "https://raw.githubusercontent.com/rabbytesoftware/quiver.core/334be6832a347f2cc00b8ca2f1ac970bb92e3f30/docs/quiver-banner.svg"
 
 # `path:` is the arrow's file location within this repo, resolved verbatim
 # (e.g. `tools/appimage-runtime` -> ./tools/appimage-runtime.yaml). `auid:`
