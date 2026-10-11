@@ -71,7 +71,7 @@ targets:
   # The installer elevates itself (winget: ElevationRequirement elevatesSelf)
   # and takes -s1 for a silent install and -d for the destination, as winget
   # uses. `start /w` waits for it. It creates its own Start Menu entries, so
-  # there is no `expose`. Uninstall runs the Uninstall.exe it places in the
+  # `expose` gives Quiver a launcher and its Open button. Uninstall runs the Uninstall.exe it places in the
   # destination folder, silently (/s); the rmdir removes what is left.
   "windows/amd64":
     requirements:
@@ -101,4 +101,8 @@ targets:
           command: 'rmdir /s /q WinRAR'
           timeout: 2m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: WinRAR
+          path: ${INSTALL_PATH}/WinRAR/WinRAR.exe
 ```
