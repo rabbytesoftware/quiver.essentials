@@ -143,4 +143,8 @@ targets:
           command: 'for /f "tokens=2,*" %a in (''reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\Google Chrome" /v UninstallString ^| findstr REG_SZ'') do %b --uninstall --channel=stable --force-uninstall'
           timeout: 10m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Chrome
+          path: ${LOCALAPPDATA}/Google/Chrome/Application/chrome.exe
 ```

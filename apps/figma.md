@@ -124,4 +124,8 @@ targets:
           command: '"%LOCALAPPDATA%\Figma\Update.exe" --uninstall -s'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Figma
+          path: ${LOCALAPPDATA}/Figma/Figma.exe
 ```

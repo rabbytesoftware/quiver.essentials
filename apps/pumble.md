@@ -122,4 +122,8 @@ targets:
           command: 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall | Get-ItemProperty | Where-Object { $_.DisplayName -like ''Pumble*'' } | ForEach-Object { Start-Process -Wait -FilePath cmd.exe -ArgumentList ''/c'', $_.QuietUninstallString }"'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Pumble
+          path: ${LOCALAPPDATA}/Programs/Pumble/Pumble.exe
 ```

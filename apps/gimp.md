@@ -147,4 +147,8 @@ targets:
           command: 'for /f "tokens=2,*" %a in (''reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-3_is1" /v QuietUninstallString ^| findstr REG_SZ'') do %b /VERYSILENT /SUPPRESSMSGBOXES /NORESTART'
           timeout: 10m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: GIMP
+          path: ${LOCALAPPDATA}/Programs/GIMP 3/bin/gimp-3.*.exe
 ```

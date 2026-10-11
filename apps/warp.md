@@ -147,4 +147,8 @@ targets:
           command: 'for /f "tokens=2,*" %a in (''reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\warp-terminal-stable_is1" /v QuietUninstallString ^| findstr REG_SZ'') do %b /VERYSILENT /SUPPRESSMSGBOXES /NORESTART'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Warp
+          path: ${LOCALAPPDATA}/Programs/Warp/warp.exe
 ```

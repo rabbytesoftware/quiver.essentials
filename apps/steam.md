@@ -161,4 +161,8 @@ targets:
             powershell -NoProfile -Command "$d = [Environment]::GetEnvironmentVariable('ProgramFiles(x86)'); $u = Join-Path $d 'Steam\uninstall.exe'; if (Test-Path $u) { Start-Process -FilePath $u -ArgumentList '/S' -Verb RunAs -Wait }"
           timeout: 10m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Steam
+          path: ${PROGRAMFILES(X86)}/Steam/steam.exe
 ```

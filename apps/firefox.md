@@ -126,7 +126,7 @@ targets:
   # so that no administrator rights are needed and the uninstaller has a fixed
   # path. The Maintenance Service (which needs admin) is skipped; desktop and
   # taskbar shortcuts are off, the installer's own Start Menu shortcut is the
-  # entry point, so there is no `expose`. The installer is deleted afterwards.
+  # entry point; `expose` gives Quiver a launcher and its Open button. The installer is deleted afterwards.
   # `uninstall` runs the helper.exe Firefox writes into its install folder.
   # Requires Windows 10 or later.
   "windows/*":
@@ -156,4 +156,8 @@ targets:
           command: '.\Firefox\uninstall\helper.exe /S & del /f /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Firefox.lnk" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Firefox Private Browsing.lnk"'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Firefox
+          path: ${INSTALL_PATH}/Firefox/firefox.exe
 ```

@@ -150,4 +150,8 @@ targets:
           command: '"%LOCALAPPDATA%\Programs\Obsidian\Uninstall Obsidian.exe" /S /currentuser'
           timeout: 10m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Obsidian
+          path: ${LOCALAPPDATA}/Programs/Obsidian/Obsidian.exe
 ```
