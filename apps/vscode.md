@@ -76,6 +76,16 @@ targets:
       ram_gb: 2
       disk_gb: 2
     lifecycle:
+      execute:
+        - type: run
+          title: Start Visual Studio Code
+          command: 'exec "${ARROW_APP}"'
+      stop:
+        - type: signal
+          title: Stop Visual Studio Code
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
       install:
         - type: fetch
           title: Download Visual Studio Code
@@ -104,6 +114,16 @@ targets:
       ram_gb: 2
       disk_gb: 2
     lifecycle:
+      execute:
+        - type: run
+          title: Start Visual Studio Code
+          command: 'exec "${ARROW_APP}"'
+      stop:
+        - type: signal
+          title: Stop Visual Studio Code
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
       install:
         - type: fetch
           title: Download Visual Studio Code
@@ -135,6 +155,16 @@ targets:
       ram_gb: 2
       disk_gb: 2
     lifecycle:
+      execute:
+        - type: run
+          title: Start Visual Studio Code
+          command: 'exec "${ARROW_APP}"'
+      stop:
+        - type: signal
+          title: Stop Visual Studio Code
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
       install:
         - type: fetch
           title: Download Visual Studio Code
@@ -165,6 +195,16 @@ targets:
       ram_gb: 2
       disk_gb: 2
     lifecycle:
+      execute:
+        - type: run
+          title: Start Visual Studio Code
+          command: '"${ARROW_APP}"'
+      stop:
+        - type: signal
+          title: Stop Visual Studio Code
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
       install:
         - type: fetch
           title: Download Visual Studio Code

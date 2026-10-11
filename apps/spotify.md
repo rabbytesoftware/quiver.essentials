@@ -77,6 +77,16 @@ targets:
       ram_gb: 2
       disk_gb: 2
     lifecycle:
+      execute:
+        - type: run
+          title: Start Spotify
+          command: 'exec "${ARROW_APP}"'
+      stop:
+        - type: signal
+          title: Stop Spotify
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
       install:
         - type: fetch
           title: Download Spotify
@@ -109,6 +119,16 @@ targets:
       ram_gb: 2
       disk_gb: 2
     lifecycle:
+      execute:
+        - type: run
+          title: Start Spotify
+          command: '"%APPDATA%\Spotify\Spotify.exe"'
+      stop:
+        - type: signal
+          title: Stop Spotify
+          signal: graceful
+          timeout: 10s
+          exit_on_failure: false
       install:
         - type: fetch
           title: Download the Spotify installer
