@@ -116,6 +116,10 @@ targets:
           command: '"%LOCALAPPDATA%\slack\Update.exe" --uninstall -s'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Slack
+          path: ${LOCALAPPDATA}/slack/slack.exe
 
   # Native ARM64 build, published only as an MSIX (signed by Slack, per-user
   # install, no administrator rights). The file name must end in .msix.
@@ -142,4 +146,8 @@ targets:
           command: 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage -Name com.tinyspeck.slackdesktop | Remove-AppxPackage"'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Slack
+          path: ${LOCALAPPDATA}/slack/slack.exe
 ```

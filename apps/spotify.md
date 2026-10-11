@@ -127,4 +127,8 @@ targets:
           command: 'taskkill /F /IM Spotify.exe >nul 2>&1 & rmdir /s /q "%APPDATA%\Spotify" & del /f /q "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Spotify.lnk" & reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\Spotify" /f >nul 2>&1'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Spotify
+          path: ${APPDATA}/Spotify/Spotify.exe
 ```

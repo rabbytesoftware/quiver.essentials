@@ -158,4 +158,8 @@ targets:
           command: 'for /f "tokens=2,*" %a in (''reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\BraveSoftware Brave-Browser" /v UninstallString ^| findstr REG_SZ'') do %b --force-uninstall'
           timeout: 5m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Brave
+          path: ${LOCALAPPDATA}/BraveSoftware/Brave-Browser/Application/brave.exe
 ```

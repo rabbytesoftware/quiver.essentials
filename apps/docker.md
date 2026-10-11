@@ -149,6 +149,10 @@ targets:
           command: 'start /w "" "%LOCALAPPDATA%\Programs\DockerDesktop\Docker Desktop Installer.exe" uninstall'
           timeout: 15m
           exit_on_failure: false
+    expose:
+      desktop:
+        - name: Docker
+          path: ${LOCALAPPDATA}/Programs/DockerDesktop/Docker Desktop.exe
 
   # Linux: Docker Engine in rootless mode, the most complete Docker that needs
   # no root (Docker Desktop for Linux and the rootful engine both need
